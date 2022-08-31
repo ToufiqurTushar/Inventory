@@ -1,0 +1,217 @@
+:root {
+    --header-height: 3rem;
+    --nav-width: 68px;
+    --first-color: #4723d9;
+    --first-color-light: #afa5d9;
+    --body-color:  #f8f9fd;
+    --white-color: #ffffff;
+    --black-color: #000000;
+    --body-font: "Nunito", sans-serif;
+    --normal-font-size: 1rem;
+    --z-fixed: 0;
+}
+*,
+::before,
+::after {
+    box-sizing: border-box;
+}
+
+a {
+    text-decoration: none;
+}
+
+
+body {
+    position: relative;
+    padding-top: var(--header-height);
+    padding-left: var(--nav-width);
+    font-family: var(--body-font);
+    font-size: var(--normal-font-size);
+    transition: 0.5s;
+    background: var(--body-color);
+
+}
+body.nav-toogle-active-sm {
+    padding-left: calc(var(--nav-width) + 156px);
+}
+body.nav-toogle-active {
+    padding-left: calc(var(--nav-width));
+}
+@media screen and (min-width: 768px) { /* if 768 or bigger */
+    body {
+        padding-top: calc(var(--header-height) + 1rem);
+        padding-left: calc(var(--nav-width) + 156px);
+    }
+    body.nav-toogle-active {
+        padding-left: calc(var(--nav-width));
+    }
+}
+
+.header {
+    width: 100%;
+    height: var(--header-height);
+    position: fixed;
+    padding-left: var(--nav-width);
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--white-color);
+    transition: 0.5s;
+    z-index: 10;
+}
+
+.header.nav-toogle-active-sm {
+    padding-left: calc(var(--nav-width) + 156px);
+}
+.header.nav-toogle-active {
+    padding-left: calc(var(--nav-width));
+}
+.header_toggle {
+    color: var(--first-color);
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+.header_img {
+    width: 35px;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+}
+.header_img img {
+    width: 40px;
+    height: 45px;
+    border-radius: 50%;
+}
+@media screen and (min-width: 768px) { /* if 768 or bigger */
+    .header {
+        height: calc(var(--header-height) + 1rem);
+        padding-left: calc(var(--nav-width) + 156px);
+    }
+    .header.nav-toogle-active {
+        padding-left: calc(var(--nav-width));
+    }
+
+    .header_img {
+        width: 40px;
+        height: 40px;
+    }
+    .header_img img {
+        width: 45px;
+    }
+
+}
+.l-navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: var(--nav-width);
+    height: 100vh;
+    background-color: var(--first-color);
+    padding: 0.5rem 1rem 0 0;
+    transition: 0.5s;
+    z-index: 10;
+}
+.l-navbar.nav-toogle-active-sm {
+    width: calc(var(--nav-width) + 156px);
+}
+.l-navbar.nav-toogle-active {
+    width: calc(var(--nav-width));
+}
+@media screen and (min-width: 768px) { /* if 768 or bigger */
+    .l-navbar {
+        width: calc(var(--nav-width) + 156px);
+    }
+    .l-navbar.nav-toogle-active {
+        width: calc(var(--nav-width));
+    }
+}
+
+.nav {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
+}
+
+.nav_logo,
+.nav_link {
+    display: grid;
+    grid-template-columns: max-content max-content;
+    align-items: center;
+    column-gap: 1rem;
+    padding: 0.5rem 0 0.5rem 1.5rem;
+}
+
+
+
+.nav_logo {
+    margin-bottom: 2rem;
+}
+.nav_logo-icon {
+    font-size: 1.25rem;
+    color: var(--white-color);
+}
+.nav_logo-name {
+    color: var(--white-color);
+    font-weight: 700;
+}
+.nav_link {
+    position: relative;
+    color: var(--first-color-light);
+    margin-bottom: 1.5rem;
+    transition: 0.3s;
+}
+.nav_link:hover {
+    color: var(--white-color);
+}
+.nav_icon {
+    font-size: 1rem;
+}
+
+
+.active::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    width: 2px;
+    height: 32px;
+    background-color: var(--white-color);
+}
+.height-100 {
+    height: 100vh;
+}
+
+.nav_icon,
+.nav_name  {
+    color: #ccc;
+}
+.nav_icon:hover ,
+.nav_name:hover {
+    color: #ffffff;
+}
+
+.active .nav_icon ,
+.active .nav_name{
+    color: #ffffff;
+}
+a, a:link {
+    text-decoration: none;
+}
+
+
+.hand{
+    cursor: pointer;
+}
+.cursor {
+    cursor: text;
+}
+
+.fa-circle {
+    border-radius: 50%;
+    border: 1px solid #39d4dd;
+    padding: 5px;
+}
