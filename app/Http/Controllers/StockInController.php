@@ -68,6 +68,7 @@ class StockInController extends Controller
      */
     public function show(Request $request, StockIn $stockIn)
     {
+        $stockIn = StockIn::find($request->stocks_in);
         $this->authorize('view', $stockIn);
 
         return view('app.stocks_in.show', compact('stockIn'));
@@ -80,6 +81,7 @@ class StockInController extends Controller
      */
     public function edit(Request $request, StockIn $stockIn)
     {
+        $stockIn = StockIn::find($request->stocks_in);
         $this->authorize('update', $stockIn);
 
         return view('app.stocks_in.edit', compact('stockIn'));
@@ -92,6 +94,7 @@ class StockInController extends Controller
      */
     public function update(StockInUpdateRequest $request, StockIn $stockIn)
     {
+        $stockIn = StockIn::find($request->stocks_in);
         $this->authorize('update', $stockIn);
 
         $validated = $request->validated();
@@ -119,6 +122,7 @@ class StockInController extends Controller
      */
     public function destroy(Request $request, StockIn $stockIn)
     {
+        $stockIn = StockIn::find($request->stocks_in);
         $this->authorize('delete', $stockIn);
 
         if ($stockIn->product_image) {
