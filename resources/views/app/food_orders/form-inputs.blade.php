@@ -70,7 +70,12 @@
         </div>
     </template>
     <template x-if="grand_total > 0">
-        <h5>Total: <span x-text="grand_total"></span></h5>
+        <<div>
+            <h5>Price: <span x-text="grand_price"></span></h5>
+            <h5>Discount: <span x-text="grand_discount"></span></h5>
+            <h5>Total: <span x-text="grand_total"></span></h5>
+            <hr>
+        </div>
     </template>
 
     <div class="d-flex bd-highlight">
@@ -167,7 +172,7 @@
     <script>
         function init_() {
             return {
-                food_entries : @json($foodentries??null),
+                food_entries : @json($foodentries?? 'null'),
                 menu_names: @json($foodOrder->menu_names??[]),
                 menu_names_json:JSON.stringify(@json($foodOrder->menu_names??[])),
                 food_entry_id: null,
@@ -176,7 +181,9 @@
                 price: null,
                 discount: null,
                 total: null,
-                grand_total: {{ $editing ? $foodOrder->price : 'null' }},
+                grand_price: {{ $editing ? $foodOrder->price : 'null' }},
+                grand_discount: {{ $editing ? $foodOrder->discount : 'null' }},
+                grand_total: {{ $editing ? $foodOrder->total : 'null' }},
                 selectFoodItem(item_id) {
                     this.calculateItemPrice(item_id);
                 },
@@ -234,10 +241,16 @@
                     }
                 },
                 calculatePrice() {
+                    let grandPrice = 0;
+                    let grandDiscount = 0;
                     let grandTotal = 0;
                     this.menu_names.forEach(function(item){
+                        grandPrice += item.p;
+                        grandDiscount += item.d;
                         grandTotal += item.t;
                     });
+                    this.grand_price  = grandPrice;
+                    this.grand_discount = grandDiscount;
                     this.grand_total = grandTotal;
                 },
             };
