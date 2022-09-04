@@ -39,7 +39,7 @@
             name="expiry_days"
             label="Expiry Days"
             value="{{ old('expiry_days', ($editing ? $stockIn->expiry_days : '')) }}"
-            max="255"
+
             placeholder="Expiry Days"
             required
         ></x-inputs.number>
@@ -50,7 +50,7 @@
             name="initial_stock"
             label="Initial Stock"
             value="{{ old('initial_stock', ($editing ? $stockIn->initial_stock : '')) }}"
-            max="255"
+
             step="0.01"
             placeholder="Initial Stock"
             required
@@ -62,7 +62,7 @@
             name="alerm_stock"
             label="Alerm Stock"
             value="{{ old('alerm_stock', ($editing ? $stockIn->alerm_stock : '')) }}"
-            max="255"
+
             step="0.01"
             placeholder="Alerm Stock"
             required

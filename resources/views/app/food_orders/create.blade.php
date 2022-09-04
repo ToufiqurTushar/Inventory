@@ -16,20 +16,6 @@
             >
                 @include('app.food_orders.form-inputs')
 
-                <div class="mt-4">
-                    <a
-                        href="{{ route('food-orders.index') }}"
-                        class="btn btn-light"
-                    >
-                        <i class="icon ion-md-return-left text-primary"></i>
-                        @lang('crud.common.back')
-                    </a>
-
-                    <button type="submit" class="btn btn-primary float-right">
-                        <i class="fa fa-floppy-disk"></i>
-                        @lang('crud.common.create')
-                    </button>
-                </div>
             </x-form>
         </div>
     </div>

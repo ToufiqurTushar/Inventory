@@ -24,11 +24,14 @@ class FoodOrderUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'menu_name' => ['required', 'max:255', 'string'],
             'quantity' => ['required', 'numeric'],
             'discount' => ['required', 'numeric'],
             'created_by_id' => ['required', 'max:255'],
+            'member_id' => ['required', 'max:255'],
             'price' => ['required', 'numeric'],
+            'total' => ['required', 'numeric'],
+            'mobile' => ['required', 'max:255', 'string'],
+            'menu_names' => ['required', 'max:255', 'json'],
         ];
     }
 }

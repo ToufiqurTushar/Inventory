@@ -52,7 +52,7 @@
                     <thead>
                         <tr>
                             <th class="text-left">
-                                @lang('crud.food_orders.inputs.menu_name')
+                                Menu
                             </th>
                             <th class="text-right">
                                 @lang('crud.food_orders.inputs.quantity')
@@ -60,12 +60,13 @@
                             <th class="text-right">
                                 @lang('crud.food_orders.inputs.discount')
                             </th>
-                            <th class="text-left">
-                                @lang('crud.food_orders.inputs.created_by_id')
-                            </th>
                             <th class="text-right">
                                 @lang('crud.food_orders.inputs.price')
                             </th>
+                            <th class="text-left">
+                                Member
+                            </th>
+
                             <th class="text-center">
                                 @lang('crud.common.actions')
                             </th>
@@ -74,11 +75,12 @@
                     <tbody>
                         @forelse($foodOrders as $foodOrder)
                         <tr>
-                            <td>{{ $foodOrder->menu_name ?? '-' }}</td>
+                            <td>{{ implode(', ',array_map(fn($item) => $item['f'],  $foodOrder->menu_names)) }}</td>
                             <td>{{ $foodOrder->quantity ?? '-' }}</td>
                             <td>{{ $foodOrder->discount ?? '-' }}</td>
-                            <td>{{ $foodOrder->created_by_id ?? '-' }}</td>
                             <td>{{ $foodOrder->price ?? '-' }}</td>
+                            <td>{{ \App\Models\Customer::find(\App\Models\Member::find($foodOrder->member_id)->customer_id)->name ?? '-' }}</td>
+
                             <td class="text-center" style="width: 134px;">
                                 <div
                                     role="group"
@@ -96,18 +98,19 @@
                                             <i class="fa fa-pen-to-square"></i>
                                         </button>
                                     </a>
-                                    @endcan @can('view', $foodOrder)
-                                    <a
-                                        href="{{ route('food-orders.show', $foodOrder) }}"
-                                    >
-                                        <button
-                                            type="button"
-                                            class="btn btn-light"
-                                        >
-                                            <i class="fa fa-eye"></i>
-                                        </button>
-                                    </a>
-                                    @endcan @can('delete', $foodOrder)
+                                   @endcan
+                                        {{--@can('view', $foodOrder)
+                                   <a
+                                       href="{{ route('food-orders.show', $foodOrder) }}"
+                                   >
+                                       <button
+                                           type="button"
+                                           class="btn btn-light"
+                                       >
+                                           <i class="fa fa-eye"></i>
+                                       </button>
+                                   </a>
+                                   @endcan--}} @can('delete', $foodOrder)
                                     <form
                                         action="{{ route('food-orders.destroy', $foodOrder) }}"
                                         method="POST"

@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\FoodEntry;
 use App\Models\FoodOrder;
+use App\Models\Member;
+use App\Models\MemberType;
 use Illuminate\Http\Request;
 use App\Http\Requests\FoodOrderStoreRequest;
 use App\Http\Requests\FoodOrderUpdateRequest;
@@ -35,20 +38,33 @@ class FoodOrderController extends Controller
     {
         $this->authorize('create', FoodOrder::class);
 
-        return view('app.food_orders.create');
+        $members = Member::join('customers', 'customers.id', '=', 'members.customer_id')
+            ->pluck('customers.name', 'members.customer_id');
+
+        $foodentries = FoodEntry::select('id', 'product_name', 'sale_cost', 'member_discount')->get();
+
+        return view('app.food_orders.create', compact('foodentries', 'members'));
     }
 
     /**
      * @param \App\Http\Requests\FoodOrderStoreRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function store(FoodOrderStoreRequest $request)
+    public function store(Request $request)
     {
         $this->authorize('create', FoodOrder::class);
 
-        $validated = $request->validated();
-
-        $foodOrder = FoodOrder::create($validated);
+        $menu_names = collect(json_decode($request->menu_names));
+        $foodOrder = new FoodOrder;
+        $foodOrder->member_id = $request->member_id;
+        $foodOrder->quantity = $menu_names->sum('q');
+        $foodOrder->discount = $menu_names->sum('d');
+        $foodOrder->price = $menu_names->sum('p');
+        $foodOrder->total = $menu_names->sum('t');
+        $foodOrder->menu_names = $menu_names;
+        $foodOrder->mobile = $request->mobile;
+        $foodOrder->created_by_id = auth()->id();
+        $foodOrder->save();
 
         return redirect()
             ->route('food-orders.edit', $foodOrder)
@@ -76,7 +92,12 @@ class FoodOrderController extends Controller
     {
         $this->authorize('update', $foodOrder);
 
-        return view('app.food_orders.edit', compact('foodOrder'));
+        $members = Member::join('customers', 'customers.id', '=', 'members.customer_id')
+            ->pluck('customers.name', 'members.customer_id');
+
+        $foodentries = FoodEntry::select('id', 'product_name', 'sale_cost', 'member_discount')->get();
+
+        return view('app.food_orders.edit', compact('foodOrder','foodentries', 'members'));
     }
 
     /**
@@ -84,15 +105,19 @@ class FoodOrderController extends Controller
      * @param \App\Models\FoodOrder $foodOrder
      * @return \Illuminate\Http\Response
      */
-    public function update(
-        FoodOrderUpdateRequest $request,
-        FoodOrder $foodOrder
-    ) {
+    public function update(Request $request, FoodOrder $foodOrder) {
         $this->authorize('update', $foodOrder);
 
-        $validated = $request->validated();
-
-        $foodOrder->update($validated);
+        $menu_names = collect(json_decode($request->menu_names));
+        $foodOrder->member_id = $request->member_id;
+        $foodOrder->quantity = $menu_names->sum('q');
+        $foodOrder->discount = $menu_names->sum('d');
+        $foodOrder->price = $menu_names->sum('p');
+        $foodOrder->total = $menu_names->sum('t');
+        $foodOrder->menu_names = $menu_names;
+        $foodOrder->mobile = $request->mobile;
+        $foodOrder->created_by_id = auth()->id();
+        $foodOrder->update();
 
         return redirect()
             ->route('food-orders.edit', $foodOrder)

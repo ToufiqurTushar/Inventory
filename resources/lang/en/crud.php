@@ -57,22 +57,6 @@ return [
         ],
     ],
 
-    'food_orders' => [
-        'name' => 'Food Orders',
-        'index_title' => 'FoodOrders List',
-        'new_title' => 'New Food order',
-        'create_title' => 'Create FoodOrder',
-        'edit_title' => 'Edit FoodOrder',
-        'show_title' => 'Show FoodOrder',
-        'inputs' => [
-            'menu_name' => 'Menu Name',
-            'quantity' => 'Quantity',
-            'discount' => 'Discount',
-            'created_by_id' => 'Created By Id',
-            'price' => 'Price',
-        ],
-    ],
-
     'members' => [
         'name' => 'Members',
         'index_title' => 'Members List',
@@ -116,6 +100,23 @@ return [
             'alerm_stock' => 'Alerm Stock',
             'm_by_u' => 'M By U',
             'product_image' => 'Product Image',
+        ],
+    ],
+
+    'food_orders' => [
+        'name' => 'Food Orders',
+        'index_title' => 'FoodOrders List',
+        'new_title' => 'New Food order',
+        'create_title' => 'Create FoodOrder',
+        'edit_title' => 'Edit FoodOrder',
+        'show_title' => 'Show FoodOrder',
+        'inputs' => [
+            'quantity' => 'Quantity',
+            'discount' => 'Discount',
+            'created_by_id' => 'Created By Id',
+            'price' => 'Price',
+            'mobile' => 'Mobile',
+            'menu_names' => 'Menu Names',
         ],
     ],
 

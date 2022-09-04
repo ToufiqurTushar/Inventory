@@ -58,7 +58,7 @@
             name="production_cost"
             label="Production Cost"
             value="{{ old('production_cost', ($editing ? $foodEntry->production_cost : '')) }}"
-            max="255"
+
             step="0.01"
             placeholder="Production Cost"
             required
@@ -70,7 +70,7 @@
             name="sale_cost"
             label="Sale Cost"
             value="{{ old('sale_cost', ($editing ? $foodEntry->sale_cost : '')) }}"
-            max="255"
+
             step="0.01"
             placeholder="Sale Cost"
             required
@@ -82,7 +82,7 @@
             name="member_discount"
             label="Member Discount"
             value="{{ old('member_discount', ($editing ? $foodEntry->member_discount : '')) }}"
-            max="255"
+
             step="0.01"
             placeholder="Member Discount"
         ></x-inputs.number>
@@ -93,7 +93,7 @@
             name="special_discount"
             label="Special Discount"
             value="{{ old('special_discount', ($editing ? $foodEntry->special_discount : '')) }}"
-            max="255"
+
             step="0.01"
             placeholder="Special Discount"
         ></x-inputs.number>
@@ -104,7 +104,7 @@
             name="others_discount"
             label="Others Discount"
             value="{{ old('others_discount', ($editing ? $foodEntry->others_discount : '')) }}"
-            max="255"
+
             step="0.01"
             placeholder="Others Discount"
         ></x-inputs.number>

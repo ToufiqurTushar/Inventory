@@ -15,29 +15,6 @@
                 class="mt-4"
             >
                 @include('app.food_orders.form-inputs')
-
-                <div class="mt-4">
-                    <a
-                        href="{{ route('food-orders.index') }}"
-                        class="btn btn-light"
-                    >
-                        <i class="icon ion-md-return-left text-primary"></i>
-                        @lang('crud.common.back')
-                    </a>
-
-                    <a
-                        href="{{ route('food-orders.create') }}"
-                        class="btn btn-light"
-                    >
-                        <i class="icon ion-md-add text-primary"></i>
-                        @lang('crud.common.create')
-                    </a>
-
-                    <button type="submit" class="btn btn-primary float-right">
-                        <i class="fa fa-floppy-disk"></i>
-                        @lang('crud.common.update')
-                    </button>
-                </div>
             </x-form>
         </div>
     </div>

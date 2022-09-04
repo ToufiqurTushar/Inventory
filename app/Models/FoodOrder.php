@@ -12,14 +12,20 @@ class FoodOrder extends Model
     use Searchable;
 
     protected $fillable = [
-        'menu_name',
         'quantity',
         'discount',
         'created_by_id',
+        'member_id',
         'price',
+        'mobile',
+        'menu_names',
     ];
 
     protected $searchableFields = ['*'];
 
     protected $table = 'food_orders';
+
+    protected $casts = [
+        'menu_names' => 'array',
+    ];
 }

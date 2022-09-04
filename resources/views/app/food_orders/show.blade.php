@@ -11,10 +11,6 @@
 
             <div class="mt-4">
                 <div class="mb-4">
-                    <h5>@lang('crud.food_orders.inputs.menu_name')</h5>
-                    <span>{{ $foodOrder->menu_name ?? '-' }}</span>
-                </div>
-                <div class="mb-4">
                     <h5>@lang('crud.food_orders.inputs.quantity')</h5>
                     <span>{{ $foodOrder->quantity ?? '-' }}</span>
                 </div>
@@ -29,6 +25,14 @@
                 <div class="mb-4">
                     <h5>@lang('crud.food_orders.inputs.price')</h5>
                     <span>{{ $foodOrder->price ?? '-' }}</span>
+                </div>
+                <div class="mb-4">
+                    <h5>@lang('crud.food_orders.inputs.mobile')</h5>
+                    <span>{{ $foodOrder->mobile ?? '-' }}</span>
+                </div>
+                <div class="mb-4">
+                    <h5>@lang('crud.food_orders.inputs.menu_names')</h5>
+                    <pre>{{ json_encode($foodOrder->menu_names) ?? '-' }}</pre>
                 </div>
             </div>
 

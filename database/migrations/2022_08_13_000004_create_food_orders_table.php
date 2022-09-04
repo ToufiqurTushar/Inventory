@@ -13,13 +13,17 @@ class CreateFoodOrdersTable extends Migration
      */
     public function up()
     {
+        Schema::dropIfExists('food_orders');
         Schema::create('food_orders', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('menu_name');
+            $table->unsignedBigInteger('member_id');
             $table->double('quantity');
             $table->double('discount');
             $table->unsignedBigInteger('created_by_id');
             $table->double('price');
+            $table->double('total');
+            $table->string('mobile');
+            $table->json('menu_names');
 
             $table->timestamps();
         });

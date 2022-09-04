@@ -39,7 +39,7 @@
             name="balance"
             label="Balance"
             value="{{ old('balance', ($editing ? $customer->balance : '0')) }}"
-            max="255"
+
             step="0.01"
             placeholder="Balance"
             required

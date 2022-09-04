@@ -23,11 +23,12 @@ class FoodOrderFactory extends Factory
     public function definition()
     {
         return [
-            'menu_name' => $this->faker->text(255),
             'quantity' => $this->faker->randomNumber(2),
             'discount' => $this->faker->randomNumber(2),
             'created_by_id' => $this->faker->randomNumber,
             'price' => $this->faker->randomNumber(2),
+            'mobile' => $this->faker->phoneNumber,
+            'menu_names' => [],
         ];
     }
 }
