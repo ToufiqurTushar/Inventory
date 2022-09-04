@@ -70,10 +70,12 @@
         </div>
     </template>
     <template x-if="grand_total > 0">
-        <<div>
-            <h5>Price: <span x-text="grand_price"></span></h5>
-            <h5>Discount: <span x-text="grand_discount"></span></h5>
-            <h5>Total: <span x-text="grand_total"></span></h5>
+        <div class="">
+            <div class="text-end">
+                <h5>Price: <span x-text="grand_price"></span></h5>
+                <h5>Discount: <span x-text="grand_discount"></span></h5>
+                <h5>Total: <span x-text="grand_total"></span></h5>
+            </div>
             <hr>
         </div>
     </template>
