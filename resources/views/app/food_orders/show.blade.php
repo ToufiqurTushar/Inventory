@@ -171,6 +171,16 @@
                                             <td class="text-center">৳ {{ $item['t'] }}</td>
                                         </tr>
                                     @endforeach
+                                    @if(count($foodOrder->menu_names) < 10)
+                                        @foreach(array_fill(0, 10-count($foodOrder->menu_names), 0) as $item)
+                                            <tr>
+                                                <td>&nbsp;</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                        @endforeach
+                                    @endif
                                     </tbody>
                                     <tfoot>
                                     @php
