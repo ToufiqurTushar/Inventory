@@ -2,11 +2,6 @@ image: gradle:jdk11
 
 before_script:
   - echo 'before_script start...'
-  - mkdir -p ~/.ssh
-  - echo "$IP"
-  - ssh-keyscan -H traveltech.digital >> ~/.ssh/known_hosts
-  - chmod 644 ~/.ssh/known_hosts
-  - echo 'before_script completed'
 
 stages:
   - pull_and_update_prod
@@ -14,8 +9,6 @@ stages:
 pull_and_update_prod:
   stage: pull_and_update_prod
   script:
-    - echo "$SECRET_KEY_CPANEL_PROD" > key.pem
-    - chmod 400 key.pem
-    - /bin/sh -c "ssh -i key.pem traveltech@traveltech.digital 'bash -s' < zscript/pull-main.sh"
+    - echo "PROD" > key.pem
   only:
     - main

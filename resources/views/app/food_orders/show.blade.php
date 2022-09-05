@@ -121,7 +121,7 @@
             <div class="mt-4">
                 <div class="row p-2">
                     <div class="col-lg-6">
-                        <div class="invoice-logo"><img width="100" src="{{ asset('images/logo.png') }}" alt="Invoice logo"></div>
+                        <div class="invoice-logo"><img width="170" src="{{ asset('images/logo.png') }}" alt="Invoice logo"></div>
                     </div>
                     <div class="col-lg-6">
                         <ul class="list-unstyled text-end">
