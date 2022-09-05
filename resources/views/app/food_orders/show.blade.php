@@ -176,7 +176,7 @@
                                     @php
                                         $vat = $foodOrder->price * 15 / 100 ;
                                         $balance = \App\Models\Customer::find(\App\Models\Member::find($foodOrder->member_id)->customer_id)->balance ?? 0;
-                                        $total = $balance - $foodOrder->price + $vat - $foodOrder->discount;
+                                        $total = $foodOrder->price + $vat - $foodOrder->discount - $balance;
                                     @endphp
                                     <tr>
                                         <th colspan="3" class="text-right">Sub Total:</th>
