@@ -121,11 +121,11 @@
             <div class="mt-4">
                 <div class="row p-2">
                     <div class="col-lg-6">
-                        <div class="invoice-logo"><img width="100" src="{{ asset('images/user.png') }}" alt="Invoice logo"></div>
+                        <div class="invoice-logo"><img width="100" src="{{ asset('images/logo.png') }}" alt="Invoice logo"></div>
                     </div>
                     <div class="col-lg-6">
                         <ul class="list-unstyled text-end">
-                            <li>Restaurant</li>
+                            <li>World Travellers Club Ltd.</li>
                             <li>Gulshan 1, Dhaka</li>
                             <li>Bangladesh</li>
                             <li>VAT Number EU826113958</li>
