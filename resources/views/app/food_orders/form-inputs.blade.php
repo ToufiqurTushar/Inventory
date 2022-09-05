@@ -165,8 +165,8 @@
         </a>
 
         <button type="submit" class="btn btn-primary float-right" x-bind:disabled="menu_names.length == 0">
-            <i class="fa fa-floppy-disk"></i>
-            {{ $editing ? "Update" : 'Create'}}
+            <i class="fa fa-cart-shopping"></i>
+            {{ $editing ? "Update" : 'Place Order'}}
         </button>
     </div>
 

@@ -66,8 +66,10 @@ class FoodOrderController extends Controller
         $foodOrder->created_by_id = auth()->id();
         $foodOrder->save();
 
+        //
+
         return redirect()
-            ->route('food-orders.edit', $foodOrder)
+            ->route('food-orders.show', $foodOrder)
             ->withSuccess(__('crud.common.created'));
     }
 
