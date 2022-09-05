@@ -11,40 +11,41 @@
 
             <div class="" id="printableArea">
                 <div class="row h6">
-                    <table class="table table-no-bordered">
-                        <tr>
-                            <td width="50%">
-                                <div class="invoice-logo"><img width="150" src="{{ asset('images/logo.png') }}" alt="Invoice logo"></div>
-                            </td>
-                            <td width="50%">
-                                <ul class="list-unstyled text-end">
-                                    <li>World Travellers Club Ltd.</li>
-                                    <li>Gulshan 1, Dhaka</li>
-                                    <li>Bangladesh</li>
-                                    <li>VAT Number EU826113958</li>
-                                </ul>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td width="50%">
-                                <ul class="list-unstyled">
-                                    <li><strong>Invoice</strong> #936988</li>
-                                    <li><strong>Invoice Date:</strong> {{  date_format(date_create($foodOrder->created_at ?? now()), 'l, F jS, Y') }}</li>
-                                    <li><strong>Due Date:</strong> {{  date_format(date_create($foodOrder->created_at ?? now()), 'l, F jS, Y') }}</li>
-                                    <li><strong>Status:</strong> <span class="badge bg-success">PAID</span></li>
-                                </ul>
-                            </td>
-                            <td width="50%">
-                                <ul class="list-unstyled">
-                                    <li><strong>Invoiced To</strong></li>
-                                    <li>{{ \App\Models\Customer::find(\App\Models\Member::find($foodOrder->member_id)->customer_id)->name ?? '-' }}</li>
-                                    <li>{{ $foodOrder->mobile }}, Gulshan 1</li>
-                                    <li>Dhaka, Bangladesh</li>
-                                </ul>
-                            </td>
-                        </tr>
-                    </table>
-
+                    <div class="col-lg-12">
+                        <table class="table table-no-bordered m-0">
+                            <tr>
+                                <td width="50%">
+                                    <div class="invoice-logo"><img width="150" src="{{ asset('images/logo.png') }}" alt="Invoice logo"></div>
+                                </td>
+                                <td width="50%">
+                                    <ul class="list-unstyled text-end">
+                                        <li>World Travellers Club Ltd.</li>
+                                        <li>Gulshan 1, Dhaka</li>
+                                        <li>Bangladesh</li>
+                                        <li>VAT Number EU826113958</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="50%">
+                                    <ul class="list-unstyled">
+                                        <li><strong>Invoice</strong> #936988</li>
+                                        <li><strong>Invoice Date:</strong> {{  date_format(date_create($foodOrder->created_at ?? now()), 'l, F jS, Y') }}</li>
+                                        <li><strong>Due Date:</strong> {{  date_format(date_create($foodOrder->created_at ?? now()), 'l, F jS, Y') }}</li>
+                                        <li><strong>Status:</strong> <span class="badge bg-success">PAID</span></li>
+                                    </ul>
+                                </td>
+                                <td width="50%">
+                                    <ul class="list-unstyled">
+                                        <li><strong>Invoiced To</strong></li>
+                                        <li>{{ \App\Models\Customer::find(\App\Models\Member::find($foodOrder->member_id)->customer_id)->name ?? '-' }}</li>
+                                        <li>{{ $foodOrder->mobile }}, Gulshan 1</li>
+                                        <li>Dhaka, Bangladesh</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
                     <div class="col-lg-12">
                         <div class="invoice-items">
                             <div class="table-responsive" style="overflow: hidden; outline: none;" tabindex="0">
@@ -79,23 +80,20 @@
                                     </tbody>
                                     <tfoot>
                                     @php
-                                        $vat = $foodOrder->price * 15 / 100 ;
+                                        $vat = $foodOrder->total * 5 / 100 ;
                                         $balance = \App\Models\Customer::find(\App\Models\Member::find($foodOrder->member_id)->customer_id)->balance ?? 0;
-                                        $bill = $foodOrder->price + $vat - $foodOrder->discount;
+                                        $bill = $foodOrder->total + $vat - $foodOrder->discount;
                                         $total = $bill - $balance;
                                     @endphp
                                     <tr>
                                         <th colspan="3" class="text-right">Sub Total:</th>
                                         <th class="text-center">৳ {{ $foodOrder->price }}</th>
                                     </tr>
-                                    {{--<tr>
-                                        <th colspan="3" class="text-right">15% VAT:</th>
-                                        <th class="text-center">৳ {{ $vat }}</th>
-                                    </tr>--}}
                                     <tr>
                                         <th colspan="3" class="text-right">Discount:</th>
                                         <th class="text-center">৳ {{ $foodOrder->discount }}</th>
                                     </tr>
+
                                     {{--<tr>
                                         <th colspan="3" class="text-right">Bill Amount:</th>
                                         <th class="text-center">৳ {{ $bill }}</th>
@@ -108,13 +106,26 @@
                                         <th colspan="3" class="text-right">Total:</th>
                                         <th class="text-center">৳ {{ $foodOrder->total }}</th>
                                     </tr>
+                                    <tr>
+                                        <th colspan="3" class="text-right">&nbsp;</th>
+                                        <th class="text-center"></th>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="3" class="text-right">5% VAT:</th>
+                                        <th class="text-center">৳ {{ $vat }}</th>
+                                    </tr>
+
+                                    <tr>
+                                        <th colspan="3" class="text-right">Payable amount:</th>
+                                        <th class="text-center">৳ {{ $foodOrder->total+$vat }}</th>
+                                    </tr>
                                     </tfoot>
                                 </table>
                             </div>
                         </div>
                         <div class="invoice-footer mt-5">
                             <p class="text-center h4">Thanks for comming</a></p>
-                            <p class="text-center mt-5 pt-5">Generated on {{  date_format(date_create($foodOrder->created_at ?? now()), 'l, F jS, Y') }} <a href="#" class="btn btn-default ml15"><i class="fa fa-print mr5"></i> <button class="btn" onclick="printableDiv('printableArea')">Print</button></a></p>
+                            <p class="text-center mt-5 pt-5">Generated on {{  date_format(date_create($foodOrder->created_at ?? now()), 'l, F jS, Y') }} </p>
                         </div>
                     </div>
                 </div>
@@ -143,6 +154,9 @@
                     <pre>{{ json_encode($foodOrder->menu_names) ?? '-' }}</pre>
                 </div>--}}
             </div>
+            <div class="text-center">
+                <a href="#" class="btn btn-default" onclick="printableDiv('printableArea')"><i class="fa fa-print mr5"></i> Print</a>
+            </div>
 
             <div class="mt-4">
                 <a
@@ -165,16 +179,4 @@
         </div>
     </div>
 </div>
-    <script>
-        function printableDiv(printableAreaDivId) {
-            var printContents = document.getElementById(printableAreaDivId).innerHTML;
-            var originalContents = document.body.innerHTML;
-
-            document.body.innerHTML = printContents;
-
-            window.print();
-
-            document.body.innerHTML = originalContents;
-        }
-    </script>
 </x-app>

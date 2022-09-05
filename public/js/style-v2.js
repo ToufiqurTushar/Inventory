@@ -59,3 +59,13 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
     // Your code to run since DOM is loaded and ready
 });
+function printableDiv(printableAreaDivId) {
+    var printContents = document.getElementById(printableAreaDivId).innerHTML;
+    var originalContents = document.body.innerHTML;
+
+    document.body.innerHTML = printContents;
+
+    window.print();
+
+    document.body.innerHTML = originalContents;
+}
