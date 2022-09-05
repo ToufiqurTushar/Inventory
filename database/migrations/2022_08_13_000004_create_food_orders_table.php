@@ -13,7 +13,6 @@ class CreateFoodOrdersTable extends Migration
      */
     public function up()
     {
-        Schema::dropIfExists('food_orders');
         Schema::create('food_orders', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('member_id');
