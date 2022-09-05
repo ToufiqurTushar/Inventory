@@ -37,7 +37,7 @@
                             href="{{ route('stocks-in.create') }}"
                             class="btn btn-primary"
                         >
-                            <i class="icon ion-md-add"></i>
+                            <i class="fa fa-plus"></i>
                             @lang('crud.common.create')
                         </a>
                         @endcan

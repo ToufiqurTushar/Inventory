@@ -99,7 +99,6 @@
                     label="Quantity"
                     step="0"
                     min="1"
-                    placeholder="Quantity"
                     x-bind:readonly="food_entry_id == '' || food_entry_id == null"
                 ></x-inputs.number>
             </x-inputs.group>
@@ -161,7 +160,7 @@
             href="{{ route('food-orders.index') }}"
             class="btn btn-light"
         >
-            <i class="icon ion-md-return-left text-primary"></i>
+            <i class="fa fa-arrow-left text-primary"></i>
             @lang('crud.common.back')
         </a>
 
@@ -176,7 +175,7 @@
             return {
                 food_entries : @json($foodentries?? 'null'),
                 menu_names: @json($foodOrder->menu_names??[]),
-                menu_names_json:JSON.stringify(@json($foodOrder->menu_names??[])),
+                menu_names_json: JSON.stringify(@json($foodOrder->menu_names??[])),
                 food_entry_id: null,
                 food_entry: null,
                 quantity: null,
@@ -194,7 +193,6 @@
                         this.quantity = null;
                         return;
                     }
-
                     this.calculateItemPrice(this.food_entry_id);
                 },
                 addMenuName() {
@@ -214,18 +212,13 @@
                         this.price = null;
                         this.discount = null;
                         this.total = null;
-
-                        this.calculatePrice();
+                        this.calculateGrandPrice();
                     }
-                    else {
-
-                    }
-
                 },
                 removeMenuName(index) {
                     this.menu_names.splice(index, 1);
                     this.menu_names_json = JSON.stringify(this.menu_names);
-                    this.calculatePrice();
+                    this.calculateGrandPrice();
                 },
                 calculateItemPrice(selected_food_entry_id) {
                     let food_item = this.food_entries.filter(function(item){
@@ -242,7 +235,7 @@
                         this.total = null;
                     }
                 },
-                calculatePrice() {
+                calculateGrandPrice() {
                     let grandPrice = 0;
                     let grandDiscount = 0;
                     let grandTotal = 0;

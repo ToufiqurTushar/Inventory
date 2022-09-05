@@ -4,7 +4,7 @@
         <div class="card-body">
             <h4 class="card-title">
                 <a href="{{ route('members.index') }}" class="mr-4"
-                    ><i class="icon ion-md-arrow-back"></i
+                    ><i class="fa fa-arrow-left"></i
                 ></a>
                 @lang('crud.members.show_title')
             </h4>
@@ -28,13 +28,13 @@
 
             <div class="mt-4">
                 <a href="{{ route('members.index') }}" class="btn btn-light">
-                    <i class="icon ion-md-return-left"></i>
+                    <i class="fa fa-arrow-left"></i>
                     @lang('crud.common.back')
                 </a>
 
                 @can('create', App\Models\Member::class)
                 <a href="{{ route('members.create') }}" class="btn btn-light">
-                    <i class="icon ion-md-add"></i> @lang('crud.common.create')
+                    <i class="fa fa-plus"></i> @lang('crud.common.create')
                 </a>
                 @endcan
             </div>

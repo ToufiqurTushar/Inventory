@@ -4,7 +4,7 @@
         <div class="card-body">
             <h4 class="card-title">
                 <a href="{{ route('food-orders.index') }}" class="mr-4"
-                    ><i class="icon ion-md-arrow-back"></i
+                    ><i class="fa fa-arrow-left"></i
                 ></a>
                 @lang('crud.food_orders.edit_title')
             </h4>

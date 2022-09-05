@@ -4,7 +4,7 @@
         <div class="card-body">
             <h4 class="card-title">
                 <a href="{{ route('customers.index') }}" class="mr-4"
-                    ><i class="icon ion-md-arrow-back"></i
+                    ><i class="fa fa-arrow-left"></i
                 ></a>
                 @lang('crud.customers.edit_title')
             </h4>
@@ -21,7 +21,7 @@
                         href="{{ route('customers.index') }}"
                         class="btn btn-light"
                     >
-                        <i class="icon ion-md-return-left text-primary"></i>
+                        <i class="fa fa-arrow-left text-primary"></i>
                         @lang('crud.common.back')
                     </a>
 
@@ -29,7 +29,7 @@
                         href="{{ route('customers.create') }}"
                         class="btn btn-light"
                     >
-                        <i class="icon ion-md-add text-primary"></i>
+                        <i class="fa fa-plus text-primary"></i>
                         @lang('crud.common.create')
                     </a>
 

@@ -39,7 +39,7 @@
                             href="{{ route('food-orders.create') }}"
                             class="btn btn-primary"
                         >
-                            <i class="icon ion-md-add"></i>
+                            <i class="fa fa-plus"></i>
                             @lang('crud.common.create')
                         </a>
                         @endcan
@@ -98,8 +98,7 @@
                                             <i class="fa fa-pen-to-square"></i>
                                         </button>
                                     </a>
-                                   @endcan
-                                        {{--@can('view', $foodOrder)
+                                   @endcan @can('view', $foodOrder)
                                    <a
                                        href="{{ route('food-orders.show', $foodOrder) }}"
                                    >
@@ -110,7 +109,7 @@
                                            <i class="fa fa-eye"></i>
                                        </button>
                                    </a>
-                                   @endcan--}} @can('delete', $foodOrder)
+                                   @endcan @can('delete', $foodOrder)
                                     <form
                                         action="{{ route('food-orders.destroy', $foodOrder) }}"
                                         method="POST"
