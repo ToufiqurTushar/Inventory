@@ -4,7 +4,7 @@
         <div class="card-body">
             <div style="display: flex; justify-content: space-between;">
                 <h4 class="card-title">
-                    @lang('crud.member_types.index_title')
+                    @lang('crud.membership_types.index_title')
                 </h4>
             </div>
 
@@ -34,9 +34,9 @@
                         </form>
                     </div>
                     <div class="col-md-6 text-right">
-                        @can('create', App\Models\MemberType::class)
+                        @can('create', App\Models\MembershipType::class)
                         <a
-                            href="{{ route('member-types.create') }}"
+                            href="{{ route('membership-types.create') }}"
                             class="btn btn-primary"
                         >
                             <i class="fa fa-plus"></i>
@@ -48,34 +48,35 @@
             </div>
 
             <div class="table-responsive">
-                <table class="table table-borderless table-hover">
+                <table class="table table-bordered table-hover">
                     <thead>
                         <tr>
                             <th class="text-left">
-                                @lang('crud.member_types.inputs.name')
+                                @lang('crud.membership_types.inputs.type')
                             </th>
-                            <th class="text-left">
-                                @lang('crud.member_types.inputs.name_bn')
+                            <th class="text-right">
+                                @lang('crud.membership_types.inputs.discount_rate')
                             </th>
+
                             <th class="text-center">
                                 @lang('crud.common.actions')
                             </th>
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse($memberTypes as $memberType)
+                        @forelse($membershipTypes as $membershipType)
                         <tr>
-                            <td>{{ $memberType->name ?? '-' }}</td>
-                            <td>{{ $memberType->name_bn ?? '-' }}</td>
+                            <td>{{ $membershipType->type ?? '-' }}</td>
+                            <td>{{ $membershipType->discount_rate ?? '-' }}</td>
                             <td class="text-center" style="width: 134px;">
                                 <div
                                     role="group"
                                     aria-label="Row Actions"
                                     class="btn-group"
                                 >
-                                    @can('update', $memberType)
+                                    @can('update', $membershipType)
                                     <a
-                                        href="{{ route('member-types.edit', $memberType) }}"
+                                        href="{{ route('membership-types.edit', $membershipType) }}"
                                     >
                                         <button
                                             type="button"
@@ -84,9 +85,9 @@
                                             <i class="fa fa-pen-to-square"></i>
                                         </button>
                                     </a>
-                                    @endcan @can('view', $memberType)
+                                    @endcan @can('view', $membershipType)
                                     <a
-                                        href="{{ route('member-types.show', $memberType) }}"
+                                        href="{{ route('membership-types.show', $membershipType) }}"
                                     >
                                         <button
                                             type="button"
@@ -95,9 +96,9 @@
                                             <i class="fa fa-eye"></i>
                                         </button>
                                     </a>
-                                    @endcan @can('delete', $memberType)
+                                    @endcan @can('delete', $membershipType)
                                     <form
-                                        action="{{ route('member-types.destroy', $memberType) }}"
+                                        action="{{ route('membership-types.destroy', $membershipType) }}"
                                         method="POST"
                                         onsubmit="return confirm('{{ __('crud.common.are_you_sure') }}')"
                                     >
@@ -115,7 +116,7 @@
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="3">
+                            <td colspan="5">
                                 @lang('crud.common.no_items_found')
                             </td>
                         </tr>
@@ -123,7 +124,9 @@
                     </tbody>
                     <tfoot>
                         <tr>
-                            <td colspan="3">{!! $memberTypes->render() !!}</td>
+                            <td colspan="5">
+                                {!! $membershipTypes->render() !!}
+                            </td>
                         </tr>
                     </tfoot>
                 </table>

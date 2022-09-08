@@ -46,14 +46,11 @@
             </div>
 
             <div class="table-responsive">
-                <table class="table table-borderless table-hover">
+                <table class="table table-bordered table-hover">
                     <thead>
                         <tr>
                             <th class="text-left">
                                 @lang('crud.stocks_in.inputs.product_name')
-                            </th>
-                            <th class="text-left">
-                                @lang('crud.stocks_in.inputs.created_by_id')
                             </th>
                             <th class="text-left">
                                 @lang('crud.stocks_in.inputs.Product_type')
@@ -82,7 +79,6 @@
                         @forelse($stocksIn as $stockIn)
                         <tr>
                             <td>{{ $stockIn->product_name ?? '-' }}</td>
-                            <td>{{ $stockIn->created_by_id ?? '-' }}</td>
                             <td>{{ $stockIn->Product_type ?? '-' }}</td>
                             <td>{{ $stockIn->expiry_days ?? '-' }}</td>
                             <td>{{ $stockIn->initial_stock ?? '-' }}</td>

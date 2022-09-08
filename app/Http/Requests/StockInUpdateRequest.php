@@ -25,7 +25,7 @@ class StockInUpdateRequest extends FormRequest
     {
         return [
             'product_name' => ['required', 'max:255', 'string'],
-            'created_by_id' => ['required', 'max:255'],
+            'created_by_id' => ['nullable', 'max:255'],
             'Product_type' => ['required', 'max:255', 'string'],
             'expiry_days' => ['required', 'numeric'],
             'initial_stock' => ['required', 'numeric'],

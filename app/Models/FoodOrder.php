@@ -11,15 +11,7 @@ class FoodOrder extends Model
     use HasFactory;
     use Searchable;
 
-    protected $fillable = [
-        'quantity',
-        'discount',
-        'created_by_id',
-        'member_id',
-        'price',
-        'mobile',
-        'menu_names',
-    ];
+    protected $guarded = [];
 
     protected $searchableFields = ['*'];
 

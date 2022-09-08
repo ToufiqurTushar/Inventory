@@ -3,9 +3,7 @@
     <div class="card">
         <div class="card-body">
             <div style="display: flex; justify-content: space-between;">
-                <h4 class="card-title">
-                    @lang('crud.food_entries.index_title')
-                </h4>
+                <h4 class="card-title">@lang('crud.food_entries.index_title')</h4>
             </div>
 
             <div class="searchbar mt-4 mb-5">
@@ -48,32 +46,20 @@
             </div>
 
             <div class="table-responsive">
-                <table class="table table-borderless table-hover">
+                <table class="table table-bordered table-hover">
                     <thead>
                         <tr>
                             <th class="text-left">
-                                @lang('crud.food_entries.inputs.product_name')
+                                @lang('crud.food_entries.inputs.name')
+                            </th>
+                            <th class="text-left">
+                                @lang('crud.food_entries.inputs.sub_name')
                             </th>
                             <th class="text-left">
                                 @lang('crud.food_entries.inputs.image')
                             </th>
                             <th class="text-right">
-                                @lang('crud.food_entries.inputs.production_cost')
-                            </th>
-                            <th class="text-right">
-                                @lang('crud.food_entries.inputs.sale_cost')
-                            </th>
-                            <th class="text-right">
-                                @lang('crud.food_entries.inputs.member_discount')
-                            </th>
-                            <th class="text-right">
-                                @lang('crud.food_entries.inputs.special_discount')
-                            </th>
-                            <th class="text-right">
-                                @lang('crud.food_entries.inputs.others_discount')
-                            </th>
-                            <th class="text-left">
-                                @lang('crud.food_entries.inputs.created_by_id')
+                                @lang('crud.food_entries.inputs.price')
                             </th>
                             <th class="text-center">
                                 @lang('crud.common.actions')
@@ -83,18 +69,14 @@
                     <tbody>
                         @forelse($foodEntries as $foodEntry)
                         <tr>
-                            <td>{{ $foodEntry->product_name ?? '-' }}</td>
+                            <td>{{ $foodEntry->name ?? '-' }}</td>
+                            <td>{{ $foodEntry->sub_name ?? '-' }}</td>
                             <td>
                                 <x-partials.thumbnail
                                     src="{{ $foodEntry->image ? \Storage::url($foodEntry->image) : '' }}"
                                 />
                             </td>
-                            <td>{{ $foodEntry->production_cost ?? '-' }}</td>
-                            <td>{{ $foodEntry->sale_cost ?? '-' }}</td>
-                            <td>{{ $foodEntry->member_discount ?? '-' }}</td>
-                            <td>{{ $foodEntry->special_discount ?? '-' }}</td>
-                            <td>{{ $foodEntry->others_discount ?? '-' }}</td>
-                            <td>{{ $foodEntry->created_by_id ?? '-' }}</td>
+                            <td>{{ $foodEntry->price ?? '-' }}</td>
                             <td class="text-center" style="width: 134px;">
                                 <div
                                     role="group"
@@ -112,7 +94,7 @@
                                             <i class="fa fa-pen-to-square"></i>
                                         </button>
                                     </a>
-                                    @endcan @can('view', $foodEntry)
+                                    @endcan {{--@can('view', $foodEntry)
                                     <a
                                         href="{{ route('food-entries.show', $foodEntry) }}"
                                     >
@@ -123,7 +105,7 @@
                                             <i class="fa fa-eye"></i>
                                         </button>
                                     </a>
-                                    @endcan @can('delete', $foodEntry)
+                                    @endcan --}}@can('delete', $foodEntry)
                                     <form
                                         action="{{ route('food-entries.destroy', $foodEntry) }}"
                                         method="POST"

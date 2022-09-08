@@ -46,17 +46,32 @@
             </div>
 
             <div class="table-responsive">
-                <table class="table table-borderless table-hover">
+                <table class="table table-bordered table-hover">
                     <thead>
                         <tr>
                             <th class="text-left">
-                                @lang('crud.members.inputs.customer_id')
+                                @lang('crud.members.inputs.name')
                             </th>
                             <th class="text-left">
-                                @lang('crud.members.inputs.member_type_id')
+                                @lang('crud.members.inputs.email')
                             </th>
                             <th class="text-left">
-                                @lang('crud.members.inputs.card_no')
+                                @lang('crud.members.inputs.phone')
+                            </th>
+                            <th class="text-left">
+                                @lang('crud.members.inputs.image')
+                            </th>
+                            <th class="text-left">
+                                @lang('crud.members.inputs.membership_no')
+                            </th>
+                            <th class="text-left">
+                                @lang('crud.members.inputs.membership_type_id')
+                            </th>
+                            <th class="text-right">
+                                @lang('crud.members.inputs.balance')
+                            </th>
+                            <th class="text-right">
+                                @lang('crud.members.inputs.limit')
                             </th>
                             <th class="text-center">
                                 @lang('crud.common.actions')
@@ -66,13 +81,22 @@
                     <tbody>
                         @forelse($members as $member)
                         <tr>
+                            <td>{{ $member->name ?? '-' }}</td>
+                            <td>{{ $member->email ?? '-' }}</td>
+                            <td>{{ $member->phone ?? '-' }}</td>
                             <td>
-                                {{ optional($member->customer)->name ?? '-' }}
+                                <x-partials.thumbnail
+                                    src="{{ $member->image ? \Storage::url($member->image) : '' }}"
+                                />
                             </td>
+                            <td>{{ $member->membership_no ?? '-' }}</td>
                             <td>
-                                {{ optional($member->memberType)->name ?? '-' }}
+                                {{ optional($member->membershipType)->type ??
+                                '-' }}
                             </td>
-                            <td>{{ $member->card_no ?? '-' }}</td>
+                            <td>{{ $member->balance ?? '-' }}</td>
+                            <td>{{ $member->limit ?? '-' }}</td>
+                            <td>{{ $member->created_by_id ?? '-' }}</td>
                             <td class="text-center" style="width: 134px;">
                                 <div
                                     role="group"
@@ -121,7 +145,7 @@
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="4">
+                            <td colspan="10">
                                 @lang('crud.common.no_items_found')
                             </td>
                         </tr>
@@ -129,7 +153,7 @@
                     </tbody>
                     <tfoot>
                         <tr>
-                            <td colspan="4">{!! $members->render() !!}</td>
+                            <td colspan="10">{!! $members->render() !!}</td>
                         </tr>
                     </tfoot>
                 </table>

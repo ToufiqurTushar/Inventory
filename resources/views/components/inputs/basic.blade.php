@@ -2,6 +2,7 @@
     'name',
     'label',
     'value',
+    'required',
     'type' => 'text',
     'min' => null,
     'max' => null,

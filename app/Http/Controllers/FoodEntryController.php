@@ -54,6 +54,7 @@ class FoodEntryController extends Controller
 
         $foodEntry = FoodEntry::create($validated);
 
+
         return redirect()
             ->route('food-entries.edit', $foodEntry)
             ->withSuccess(__('crud.common.created'));

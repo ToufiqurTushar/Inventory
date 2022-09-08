@@ -11,16 +11,7 @@ class FoodEntry extends Model
     use HasFactory;
     use Searchable;
 
-    protected $fillable = [
-        'product_name',
-        'image',
-        'production_cost',
-        'sale_cost',
-        'member_discount',
-        'special_discount',
-        'others_discount',
-        'created_by_id',
-    ];
+    protected $guarded = [];
 
     protected $searchableFields = ['*'];
 

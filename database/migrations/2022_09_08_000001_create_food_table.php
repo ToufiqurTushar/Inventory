@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateStocksInTable extends Migration
+class CreateFoodTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,15 @@ class CreateStocksInTable extends Migration
      */
     public function up()
     {
-        Schema::create('stocks_in', function (Blueprint $table) {
+        Schema::create('food', function (Blueprint $table) {
             $table->id();
-            $table->string('product_name');
-            $table->string('Product_type');
-            $table->integer('expiry_days');
-            $table->double('initial_stock');
-            $table->double('alerm_stock');
-            $table->string('m_by_u');
-            $table->string('product_image');
+            $table->string('name');
+            $table->string('sub_name')->nullable();
+            $table->string('name_bn')->nullable();
+            $table->string('sub_name_bn')->nullable();
+            $table->string('image')->nullable();
+            $table->double('price');
+            $table->double('discounted_price')->nullable();
             $table->unsignedBigInteger('created_by_id')->nullable();
 
             $table->timestamps();
@@ -35,6 +35,6 @@ class CreateStocksInTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('stocks_in');
+        Schema::dropIfExists('food');
     }
 }

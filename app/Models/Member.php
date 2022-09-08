@@ -11,17 +11,12 @@ class Member extends Model
     use HasFactory;
     use Searchable;
 
-    protected $fillable = ['customer_id', 'member_type_id', 'card_no'];
+    protected $guarded = [];
 
     protected $searchableFields = ['*'];
 
-    public function customer()
+    public function membershipType()
     {
-        return $this->belongsTo(Customer::class);
-    }
-
-    public function memberType()
-    {
-        return $this->belongsTo(MemberType::class);
+        return $this->belongsTo(MembershipType::class);
     }
 }

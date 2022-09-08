@@ -3,22 +3,22 @@
     <div class="card">
         <div class="card-body">
             <h4 class="card-title">
-                <a href="{{ route('customers.index') }}" class="mr-4"
+                <a href="{{ route('membership-types.index') }}" class="mr-4"
                     ><i class="fa fa-arrow-left"></i
                 ></a>
-                @lang('crud.customers.create_title')
+                @lang('crud.membership_types.create_title')
             </h4>
 
             <x-form
                 method="POST"
-                action="{{ route('customers.store') }}"
+                action="{{ route('membership-types.store') }}"
                 class="mt-4"
             >
-                @include('app.customers.form-inputs')
+                @include('app.membership_types.form-inputs')
 
                 <div class="mt-4">
                     <a
-                        href="{{ route('customers.index') }}"
+                        href="{{ route('membership-types.index') }}"
                         class="btn btn-light"
                     >
                         <i class="fa fa-arrow-left text-primary"></i>

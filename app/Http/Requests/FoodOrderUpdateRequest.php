@@ -26,12 +26,18 @@ class FoodOrderUpdateRequest extends FormRequest
         return [
             'quantity' => ['required', 'numeric'],
             'discount' => ['required', 'numeric'],
-            'created_by_id' => ['required', 'max:255'],
-            'member_id' => ['required', 'max:255'],
             'price' => ['required', 'numeric'],
-            'total' => ['required', 'numeric'],
+            'special_discount' => ['required', 'numeric'],
+            'discounted_price' => ['required', 'numeric'],
+            'vat_rate' => ['required', 'numeric'],
+            'vat' => ['required', 'numeric'],
             'mobile' => ['required', 'max:255', 'string'],
             'menu_names' => ['required', 'max:255', 'json'],
+            'payable_amount' => ['required', 'numeric'],
+            'payment_type' => ['nullable', 'max:255', 'string'],
+            'payment_status' => ['nullable', 'max:255', 'string'],
+            'net_sale_price' => ['required', 'numeric'],
+            'created_by_id' => ['required', 'max:255'],
         ];
     }
 }

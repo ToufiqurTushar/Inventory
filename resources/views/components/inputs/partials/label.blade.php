@@ -1,3 +1,3 @@
 <label class="{{ ($required ?? false) ? 'label label-required ' : 'label ' }}" for="{{ $name }}">
-    {{ $label }}
+    {{ $label }}<span class="text-danger">{{ ($required ?? false) ? '*' : '' }}</span>
 </label>

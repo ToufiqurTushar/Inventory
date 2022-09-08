@@ -6,16 +6,16 @@ use App\Models\Scopes\Searchable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class MemberType extends Model
+class MembershipType extends Model
 {
     use HasFactory;
     use Searchable;
 
-    protected $fillable = ['name', 'name_bn'];
+    protected $guarded = [];
 
     protected $searchableFields = ['*'];
 
-    protected $table = 'member_types';
+    protected $table = 'membership_types';
 
     public function members()
     {

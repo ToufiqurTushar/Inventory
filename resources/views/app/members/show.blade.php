@@ -11,18 +11,46 @@
 
             <div class="mt-4">
                 <div class="mb-4">
-                    <h5>@lang('crud.members.inputs.customer_id')</h5>
-                    <span>{{ optional($member->customer)->name ?? '-' }}</span>
+                    <h5>@lang('crud.members.inputs.name')</h5>
+                    <span>{{ $member->name ?? '-' }}</span>
                 </div>
                 <div class="mb-4">
-                    <h5>@lang('crud.members.inputs.member_type_id')</h5>
+                    <h5>@lang('crud.members.inputs.email')</h5>
+                    <span>{{ $member->email ?? '-' }}</span>
+                </div>
+                <div class="mb-4">
+                    <h5>@lang('crud.members.inputs.phone')</h5>
+                    <span>{{ $member->phone ?? '-' }}</span>
+                </div>
+                <div class="mb-4">
+                    <h5>@lang('crud.members.inputs.image')</h5>
+                    <x-partials.thumbnail
+                        src="{{ $member->image ? \Storage::url($member->image) : '' }}"
+                        size="150"
+                    />
+                </div>
+                <div class="mb-4">
+                    <h5>@lang('crud.members.inputs.membership_no')</h5>
+                    <span>{{ $member->membership_no ?? '-' }}</span>
+                </div>
+                <div class="mb-4">
+                    <h5>@lang('crud.members.inputs.membership_type_id')</h5>
                     <span
-                        >{{ optional($member->memberType)->name ?? '-' }}</span
+                        >{{ optional($member->membershipType)->type ?? '-'
+                        }}</span
                     >
                 </div>
                 <div class="mb-4">
-                    <h5>@lang('crud.members.inputs.card_no')</h5>
-                    <span>{{ $member->card_no ?? '-' }}</span>
+                    <h5>@lang('crud.members.inputs.balance')</h5>
+                    <span>{{ $member->balance ?? '-' }}</span>
+                </div>
+                <div class="mb-4">
+                    <h5>@lang('crud.members.inputs.limit')</h5>
+                    <span>{{ $member->limit ?? '-' }}</span>
+                </div>
+                <div class="mb-4">
+                    <h5>@lang('crud.members.inputs.created_by_id')</h5>
+                    <span>{{ $member->created_by_id ?? '-' }}</span>
                 </div>
             </div>
 

@@ -3,22 +3,22 @@
     <div class="card">
         <div class="card-body">
             <h4 class="card-title">
-                <a href="{{ route('member-types.index') }}" class="mr-4"
+                <a href="{{ route('membership-types.index') }}" class="mr-4"
                     ><i class="fa fa-arrow-left"></i
                 ></a>
-                @lang('crud.member_types.edit_title')
+                @lang('crud.membership_types.edit_title')
             </h4>
 
             <x-form
                 method="PUT"
-                action="{{ route('member-types.update', $memberType) }}"
+                action="{{ route('membership-types.update', $membershipType) }}"
                 class="mt-4"
             >
-                @include('app.member_types.form-inputs')
+                @include('app.membership_types.form-inputs')
 
                 <div class="mt-4">
                     <a
-                        href="{{ route('member-types.index') }}"
+                        href="{{ route('membership-types.index') }}"
                         class="btn btn-light"
                     >
                         <i class="fa fa-arrow-left text-primary"></i>
@@ -26,7 +26,7 @@
                     </a>
 
                     <a
-                        href="{{ route('member-types.create') }}"
+                        href="{{ route('membership-types.create') }}"
                         class="btn btn-light"
                     >
                         <i class="fa fa-plus text-primary"></i>

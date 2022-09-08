@@ -3,14 +3,25 @@
 <div class="row">
     <x-inputs.group class="col-sm-12">
         <x-inputs.text
-            name="product_name"
-            label="Product Name"
-            value="{{ old('product_name', ($editing ? $foodEntry->product_name : '')) }}"
+            name="name"
+            label="Name"
+            :value="old('name', ($editing ? $foodEntry->name : ''))"
             maxlength="255"
-            placeholder="Product Name"
+            placeholder="Name"
             required
         ></x-inputs.text>
     </x-inputs.group>
+
+    <x-inputs.group class="col-sm-12">
+        <x-inputs.text
+            name="sub_name"
+            label="Sub Name"
+            :value="old('sub_name', ($editing ? $foodEntry->sub_name : ''))"
+            maxlength="255"
+            placeholder="Sub Name"
+        ></x-inputs.text>
+    </x-inputs.group>
+
 
     <x-inputs.group class="col-sm-12">
         <div
@@ -55,69 +66,14 @@
 
     <x-inputs.group class="col-sm-12">
         <x-inputs.number
-            name="production_cost"
-            label="Production Cost"
-            value="{{ old('production_cost', ($editing ? $foodEntry->production_cost : '')) }}"
+            name="price"
+            label="Price"
+            :value="old('price', ($editing ? $foodEntry->price : ''))"
 
             step="0.01"
-            placeholder="Production Cost"
+            placeholder="Price"
             required
         ></x-inputs.number>
     </x-inputs.group>
 
-    <x-inputs.group class="col-sm-12">
-        <x-inputs.number
-            name="sale_cost"
-            label="Sale Cost"
-            value="{{ old('sale_cost', ($editing ? $foodEntry->sale_cost : '')) }}"
-
-            step="0.01"
-            placeholder="Sale Cost"
-            required
-        ></x-inputs.number>
-    </x-inputs.group>
-
-    <x-inputs.group class="col-sm-12">
-        <x-inputs.number
-            name="member_discount"
-            label="Member Discount"
-            value="{{ old('member_discount', ($editing ? $foodEntry->member_discount : '')) }}"
-
-            step="0.01"
-            placeholder="Member Discount"
-        ></x-inputs.number>
-    </x-inputs.group>
-
-    <x-inputs.group class="col-sm-12">
-        <x-inputs.number
-            name="special_discount"
-            label="Special Discount"
-            value="{{ old('special_discount', ($editing ? $foodEntry->special_discount : '')) }}"
-
-            step="0.01"
-            placeholder="Special Discount"
-        ></x-inputs.number>
-    </x-inputs.group>
-
-    <x-inputs.group class="col-sm-12">
-        <x-inputs.number
-            name="others_discount"
-            label="Others Discount"
-            value="{{ old('others_discount', ($editing ? $foodEntry->others_discount : '')) }}"
-
-            step="0.01"
-            placeholder="Others Discount"
-        ></x-inputs.number>
-    </x-inputs.group>
-
-    <x-inputs.group class="col-sm-12">
-        <x-inputs.text
-            name="created_by_id"
-            label="Created By Id"
-            value="{{ old('created_by_id', ($editing ? $foodEntry->created_by_id : '')) }}"
-            maxlength="255"
-            placeholder="Created By Id"
-            required
-        ></x-inputs.text>
-    </x-inputs.group>
 </div>

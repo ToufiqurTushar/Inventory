@@ -1,15 +1,14 @@
 <?php
 
+
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\StockInController;
-use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\FoodEntryController;
 use App\Http\Controllers\FoodOrderController;
-use App\Http\Controllers\MemberTypeController;
 use App\Http\Controllers\PermissionController;
-
+use App\Http\Controllers\MembershipTypeController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -33,11 +32,9 @@ Route::get('/dashboard', function () {
 Route::prefix('/')->middleware('auth')->group(function () {
     Route::resource('roles', RoleController::class);
     Route::resource('permissions', PermissionController::class);
-
-    Route::resource('customers', CustomerController::class);
     Route::resource('food-entries', FoodEntryController::class);
     Route::resource('food-orders', FoodOrderController::class);
     Route::resource('members', MemberController::class);
-    Route::resource('member-types', MemberTypeController::class);
+    Route::resource('membership-types', MembershipTypeController::class);
     Route::resource('stocks-in', StockInController::class);
 });

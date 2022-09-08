@@ -17,17 +17,11 @@ class DatabaseSeeder extends Seeder
         $user = \App\Models\User::factory()
             ->count(1)
             ->create([
-                'email' => 'admin@admin.com',
+                'email' => 'admin@traveltech.digital',
                 'password' => \Hash::make('12345678'),
             ]);
         $this->call(PermissionsSeeder::class);
-        //$this->call(CustomerSeeder::class);
-        //$this->call(FoodEntrySeeder::class);
-        //$this->call(FoodOrderSeeder::class);
-        //$this->call(MemberSeeder::class);
-        //$this->call(MemberTypeSeeder::class);
-        //$this->call(StockInSeeder::class);
-        //$this->call(UserSeeder::class);
+
 
     }
 }

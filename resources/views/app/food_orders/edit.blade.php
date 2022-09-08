@@ -15,6 +15,7 @@
                 class="mt-4"
             >
                 @include('app.food_orders.form-inputs')
+
             </x-form>
         </div>
     </div>

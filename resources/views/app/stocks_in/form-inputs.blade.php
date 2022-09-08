@@ -14,17 +14,6 @@
 
     <x-inputs.group class="col-sm-12">
         <x-inputs.text
-            name="created_by_id"
-            label="Created By Id"
-            value="{{ old('created_by_id', ($editing ? $stockIn->created_by_id : '')) }}"
-            maxlength="255"
-            placeholder="Created By Id"
-            required
-        ></x-inputs.text>
-    </x-inputs.group>
-
-    <x-inputs.group class="col-sm-12">
-        <x-inputs.text
             name="Product_type"
             label="Product Type"
             value="{{ old('Product_type', ($editing ? $stockIn->Product_type : '')) }}"

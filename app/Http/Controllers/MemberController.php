@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Member;
-use App\Models\Customer;
-use App\Models\MemberType;
 use Illuminate\Http\Request;
+use App\Models\MembershipType;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\MemberStoreRequest;
 use App\Http\Requests\MemberUpdateRequest;
 
@@ -37,10 +37,9 @@ class MemberController extends Controller
     {
         $this->authorize('create', Member::class);
 
-        $customers = Customer::pluck('name', 'id');
-        $memberTypes = MemberType::pluck('name', 'id');
+        $membershipTypes = MembershipType::pluck('type', 'id');
 
-        return view('app.members.create', compact('customers', 'memberTypes'));
+        return view('app.members.create', compact('membershipTypes'));
     }
 
     /**
@@ -52,6 +51,9 @@ class MemberController extends Controller
         $this->authorize('create', Member::class);
 
         $validated = $request->validated();
+        if ($request->hasFile('image')) {
+            $validated['image'] = $request->file('image')->store('public');
+        }
 
         $member = Member::create($validated);
 
@@ -81,13 +83,9 @@ class MemberController extends Controller
     {
         $this->authorize('update', $member);
 
-        $customers = Customer::pluck('name', 'id');
-        $memberTypes = MemberType::pluck('name', 'id');
+        $membershipTypes = MembershipType::pluck('type', 'id');
 
-        return view(
-            'app.members.edit',
-            compact('member', 'customers', 'memberTypes')
-        );
+        return view('app.members.edit', compact('member', 'membershipTypes'));
     }
 
     /**
@@ -100,6 +98,13 @@ class MemberController extends Controller
         $this->authorize('update', $member);
 
         $validated = $request->validated();
+        if ($request->hasFile('image')) {
+            if ($member->image) {
+                Storage::delete($member->image);
+            }
+
+            $validated['image'] = $request->file('image')->store('public');
+        }
 
         $member->update($validated);
 
@@ -116,6 +121,10 @@ class MemberController extends Controller
     public function destroy(Request $request, Member $member)
     {
         $this->authorize('delete', $member);
+
+        if ($member->image) {
+            Storage::delete($member->image);
+        }
 
         $member->delete();
 

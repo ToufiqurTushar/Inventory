@@ -48,12 +48,9 @@
             </div>
 
             <div class="table-responsive">
-                <table class="table table-borderless table-hover">
+                <table class="table table-bordered table-hover">
                     <thead>
                         <tr>
-                            <th class="text-left">
-                                Menu
-                            </th>
                             <th class="text-right">
                                 @lang('crud.food_orders.inputs.quantity')
                             </th>
@@ -63,10 +60,39 @@
                             <th class="text-right">
                                 @lang('crud.food_orders.inputs.price')
                             </th>
-                            <th class="text-left">
-                                Member
+                            <th class="text-right">
+                                @lang('crud.food_orders.inputs.special_discount')
                             </th>
-
+                            <th class="text-right">
+                                @lang('crud.food_orders.inputs.discounted_price')
+                            </th>
+                            <th class="text-right">
+                                @lang('crud.food_orders.inputs.vat_rate')
+                            </th>
+                            <th class="text-right">
+                                @lang('crud.food_orders.inputs.vat')
+                            </th>
+                            <th class="text-left">
+                                @lang('crud.food_orders.inputs.mobile')
+                            </th>
+                            <th class="text-left">
+                                @lang('crud.food_orders.inputs.menu_names')
+                            </th>
+                            <th class="text-right">
+                                @lang('crud.food_orders.inputs.payable_amount')
+                            </th>
+                            <th class="text-left">
+                                @lang('crud.food_orders.inputs.payment_type')
+                            </th>
+                            <th class="text-left">
+                                @lang('crud.food_orders.inputs.payment_status')
+                            </th>
+                            <th class="text-right">
+                                @lang('crud.food_orders.inputs.net_sale_price')
+                            </th>
+                            <th class="text-left">
+                                @lang('crud.food_orders.inputs.created_by_id')
+                            </th>
                             <th class="text-center">
                                 @lang('crud.common.actions')
                             </th>
@@ -75,12 +101,24 @@
                     <tbody>
                         @forelse($foodOrders as $foodOrder)
                         <tr>
-                            <td>{{ implode(', ',array_map(fn($item) => $item['f'],  $foodOrder->menu_names)) }}</td>
                             <td>{{ $foodOrder->quantity ?? '-' }}</td>
                             <td>{{ $foodOrder->discount ?? '-' }}</td>
                             <td>{{ $foodOrder->price ?? '-' }}</td>
-                            <td>{{ \App\Models\Customer::find(\App\Models\Member::find($foodOrder->member_id)->customer_id)->name ?? '-' }}</td>
-
+                            <td>{{ $foodOrder->special_discount ?? '-' }}</td>
+                            <td>{{ $foodOrder->discounted_price ?? '-' }}</td>
+                            <td>{{ $foodOrder->vat_rate ?? '-' }}</td>
+                            <td>{{ $foodOrder->vat ?? '-' }}</td>
+                            <td>{{ $foodOrder->mobile ?? '-' }}</td>
+                            <td>
+                                <pre>
+{{ json_encode($foodOrder->menu_names) ?? '-' }}</pre
+                                >
+                            </td>
+                            <td>{{ $foodOrder->payable_amount ?? '-' }}</td>
+                            <td>{{ $foodOrder->payment_type ?? '-' }}</td>
+                            <td>{{ $foodOrder->payment_status ?? '-' }}</td>
+                            <td>{{ $foodOrder->net_sale_price ?? '-' }}</td>
+                            <td>{{ $foodOrder->created_by_id ?? '-' }}</td>
                             <td class="text-center" style="width: 134px;">
                                 <div
                                     role="group"
@@ -98,18 +136,18 @@
                                             <i class="fa fa-pen-to-square"></i>
                                         </button>
                                     </a>
-                                   @endcan @can('view', $foodOrder)
-                                   <a
-                                       href="{{ route('food-orders.show', $foodOrder) }}"
-                                   >
-                                       <button
-                                           type="button"
-                                           class="btn btn-light"
-                                       >
-                                           <i class="fa fa-eye"></i>
-                                       </button>
-                                   </a>
-                                   @endcan @can('delete', $foodOrder)
+                                    @endcan @can('view', $foodOrder)
+                                    <a
+                                        href="{{ route('food-orders.show', $foodOrder) }}"
+                                    >
+                                        <button
+                                            type="button"
+                                            class="btn btn-light"
+                                        >
+                                            <i class="fa fa-eye"></i>
+                                        </button>
+                                    </a>
+                                    @endcan @can('delete', $foodOrder)
                                     <form
                                         action="{{ route('food-orders.destroy', $foodOrder) }}"
                                         method="POST"
@@ -129,7 +167,7 @@
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="6">
+                            <td colspan="15">
                                 @lang('crud.common.no_items_found')
                             </td>
                         </tr>
@@ -137,7 +175,7 @@
                     </tbody>
                     <tfoot>
                         <tr>
-                            <td colspan="6">{!! $foodOrders->render() !!}</td>
+                            <td colspan="15">{!! $foodOrders->render() !!}</td>
                         </tr>
                     </tfoot>
                 </table>

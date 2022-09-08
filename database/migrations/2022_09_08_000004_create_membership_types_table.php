@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateStocksInTable extends Migration
+class CreateMembershipTypesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,11 @@ class CreateStocksInTable extends Migration
      */
     public function up()
     {
-        Schema::create('stocks_in', function (Blueprint $table) {
+        Schema::create('membership_types', function (Blueprint $table) {
             $table->id();
-            $table->string('product_name');
-            $table->string('Product_type');
-            $table->integer('expiry_days');
-            $table->double('initial_stock');
-            $table->double('alerm_stock');
-            $table->string('m_by_u');
-            $table->string('product_image');
+            $table->string('type');
+            $table->string('type_bn')->nullable();
+            $table->double('discount_rate')->default(0);
             $table->unsignedBigInteger('created_by_id')->nullable();
 
             $table->timestamps();
@@ -35,6 +31,6 @@ class CreateStocksInTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('stocks_in');
+        Schema::dropIfExists('membership_types');
     }
 }

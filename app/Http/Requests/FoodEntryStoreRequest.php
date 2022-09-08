@@ -24,14 +24,14 @@ class FoodEntryStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'product_name' => ['required', 'max:255', 'string'],
+            'name' => ['required', 'max:255', 'string'],
+            'sub_name' => ['nullable', 'max:255', 'string'],
+            'name_bn' => ['nullable', 'max:255', 'string'],
+            'sub_name_bn' => ['nullable', 'max:255', 'string'],
             'image' => ['nullable', 'image', 'max:1024'],
-            'production_cost' => ['required', 'numeric'],
-            'sale_cost' => ['required', 'numeric'],
-            'member_discount' => ['nullable', 'numeric'],
-            'special_discount' => ['nullable', 'numeric'],
-            'others_discount' => ['nullable', 'numeric'],
-            'created_by_id' => ['required', 'max:255'],
+            'price' => ['required', 'numeric'],
+            'discounted_price' => ['nullable', 'numeric'],
+            'created_by_id' => ['nullable', 'max:255'],
         ];
     }
 }

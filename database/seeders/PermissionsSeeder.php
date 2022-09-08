@@ -15,12 +15,6 @@ class PermissionsSeeder extends Seeder
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
         // Create default permissions
-        Permission::create(['name' => 'list customers']);
-        Permission::create(['name' => 'view customers']);
-        Permission::create(['name' => 'create customers']);
-        Permission::create(['name' => 'update customers']);
-        Permission::create(['name' => 'delete customers']);
-
         Permission::create(['name' => 'list foodentries']);
         Permission::create(['name' => 'view foodentries']);
         Permission::create(['name' => 'create foodentries']);
@@ -39,11 +33,11 @@ class PermissionsSeeder extends Seeder
         Permission::create(['name' => 'update members']);
         Permission::create(['name' => 'delete members']);
 
-        Permission::create(['name' => 'list membertypes']);
-        Permission::create(['name' => 'view membertypes']);
-        Permission::create(['name' => 'create membertypes']);
-        Permission::create(['name' => 'update membertypes']);
-        Permission::create(['name' => 'delete membertypes']);
+        Permission::create(['name' => 'list membershiptypes']);
+        Permission::create(['name' => 'view membershiptypes']);
+        Permission::create(['name' => 'create membershiptypes']);
+        Permission::create(['name' => 'update membershiptypes']);
+        Permission::create(['name' => 'delete membershiptypes']);
 
         Permission::create(['name' => 'list stocksin']);
         Permission::create(['name' => 'view stocksin']);
@@ -80,7 +74,7 @@ class PermissionsSeeder extends Seeder
         $adminRole = Role::create(['name' => 'super-admin']);
         $adminRole->givePermissionTo($allPermissions);
 
-        $user = \App\Models\User::whereEmail('admin@admin.com')->first();
+        $user = \App\Models\User::whereEmail('admin@traveltech.digital')->first();
 
         if ($user) {
             $user->assignRole($adminRole);
