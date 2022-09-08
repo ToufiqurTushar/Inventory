@@ -86,7 +86,7 @@ class FoodOrderController extends Controller
         $foodOrder->net_sale_price = $foodOrder->payable_amount;
         $foodOrder->menu_names = $menu_names;
         $foodOrder->mobile = $request->mobile;
-        $foodOrder->payment_type = $request->selected_payment_type??null;
+        $foodOrder->payment_type = null;
         $foodOrder->payment_status = $request->payment_status??null;
 
         $foodOrder->created_by_id = auth()->id();

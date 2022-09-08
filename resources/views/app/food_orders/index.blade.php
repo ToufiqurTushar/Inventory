@@ -75,9 +75,7 @@
                             <th class="text-left">
                                 @lang('crud.food_orders.inputs.mobile')
                             </th>
-                            <th class="text-left">
-                                @lang('crud.food_orders.inputs.menu_names')
-                            </th>
+
                             <th class="text-right">
                                 @lang('crud.food_orders.inputs.payable_amount')
                             </th>
@@ -109,11 +107,6 @@
                             <td>{{ $foodOrder->vat_rate ?? '-' }}</td>
                             <td>{{ $foodOrder->vat ?? '-' }}</td>
                             <td>{{ $foodOrder->mobile ?? '-' }}</td>
-                            <td>
-                                <pre>
-{{ json_encode($foodOrder->menu_names) ?? '-' }}</pre
-                                >
-                            </td>
                             <td>{{ $foodOrder->payable_amount ?? '-' }}</td>
                             <td>{{ $foodOrder->payment_type ?? '-' }}</td>
                             <td>{{ $foodOrder->payment_status ?? '-' }}</td>
