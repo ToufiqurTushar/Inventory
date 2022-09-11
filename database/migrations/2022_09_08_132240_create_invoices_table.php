@@ -13,12 +13,12 @@ class CreateInvoicesTable extends Migration
      */
     public function up()
     {
+        Schema::dropIfExists('invoices');
         Schema::create('invoices', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('food_order_id');
-            ///
-            /// /
-            ///
+            $table->string('invoice_no');
+            $table->dateTime('invoice_date');
             $table->timestamps();
         });
     }

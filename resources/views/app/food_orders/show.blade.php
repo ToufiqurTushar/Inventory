@@ -9,10 +9,10 @@
                     Bill Copy
                 </h4>
 
-                <div class="" id="printableArea">
-                    <div class="row h6">
+                <div class="" id="printableAreaCustomer">
+                    <div class="row" style="font-size: 14px">
                         <div class="col-lg-12">
-                            <table class="table table-no-bordered m-0">
+                            <table class="table table-no-bordered">
                                 <tr>
                                     <td width="50%">
                                         <div class="invoice-logo"><img width="150" src="{{ asset('images/logo.png') }}" alt="Invoice logo"></div>
@@ -22,16 +22,20 @@
                                             <li>World Travellers Club Ltd.</li>
                                             <li>Gulshan 1, Dhaka</li>
                                             <li>Bangladesh</li>
-                                            <li>VAT Number EU826113958</li>
+                                            {{--<li>VAT Number EU826113958</li>--}}
                                         </ul>
                                     </td>
                                 </tr>
+                            </table>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="invoice-items" id="printableAreaKitchen">
+                                <table width="100%">
                                 <tr>
                                     <td width="50%">
                                         <ul class="list-unstyled">
-                                            <li><strong>Invoice</strong> #936988</li>
-                                            <li><strong>Invoice Date:</strong> {{  date_format(date_create($foodOrder->created_at ?? now()), 'l, F jS, Y') }}</li>
-                                            <li><strong>Due Date:</strong> {{  date_format(date_create($foodOrder->created_at ?? now()), 'l, F jS, Y') }}</li>
+                                            <li><strong>Invoice</strong> #{{ $foodOrder->invoice_no }}</li>
+                                            <li><strong>Invoice Date:</strong> {{  date_format(date_create($foodOrder->invoice_date ?? now()), 'l, F jS, Y') }}</li>
                                             <li><strong>Status:</strong> <span class="badge bg-success">PAID</span></li>
                                         </ul>
                                     </td>
@@ -39,15 +43,11 @@
                                         <ul class="list-unstyled">
                                             <li><strong>Invoiced To</strong></li>
                                             <li>{{ \App\Models\Member::find($foodOrder->member_id)->name ?? '' }}</li>
-                                            <li>{{ $foodOrder->mobile }}, Gulshan 1</li>
-                                            <li>Dhaka, Bangladesh</li>
+                                            <li>{{ $foodOrder->mobile }}</li>
                                         </ul>
                                     </td>
                                 </tr>
-                            </table>
-                        </div>
-                        <div class="col-lg-12">
-                            <div class="invoice-items">
+                                </table>
                                 <div class="table-responsive" style="overflow: hidden; outline: none;" tabindex="0">
                                     <table class="table table-bordered">
                                         <thead>
@@ -65,22 +65,22 @@
                                                     $food = \App\Models\FoodEntry::find($item['id']);
                                                     if($food) {
                                                         $foodName = $food->name;
-                                                        if($food->sub_name) $foodName = $food->name.' <h6>-'.$food->sub_name.'</h6>';
+                                                        if($food->sub_name) $foodName = $food->name.' <br>-'.$food->sub_name.'';
                                                     }
                                                 @endphp
-                                                <td>{!!  $foodName ?? '-' !!}</td>
-                                                <td class="text-center align-middle">{{ $item['q'] }}</td>
-                                                <td class="text-center align-middle">৳ {{ $item['r'] }}</td>
-                                                <td class="text-center align-middle">৳ {{ $item['p']}}</td>
+                                                <td style="padding: 2px !important;">{!!  $foodName ?? '-' !!}</td>
+                                                <td style="padding: 2px !important;" class="text-center align-middle">{{ $item['q'] }}</td>
+                                                <td style="padding: 2px !important;" class="text-center align-middle">৳ {{ $item['r'] }}</td>
+                                                <td style="padding: 2px !important;" class="text-center align-middle">৳ {{ $item['p']}}</td>
                                             </tr>
                                         @endforeach
                                         @if(count($foodOrder->menu_names) < 2)
                                             @foreach(array_fill(0, 2-count($foodOrder->menu_names), 0) as $item)
                                                 <tr>
-                                                    <td>&nbsp;</td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
+                                                    <td style="padding: 2px !important;">&nbsp;</td>
+                                                    <td style="padding: 2px !important;"></td>
+                                                    <td style="padding: 2px !important;"></td>
+                                                    <td style="padding: 2px !important;"></td>
                                                 </tr>
                                             @endforeach
                                         @endif
@@ -93,12 +93,12 @@
                                             $total = $bill - $balance;
                                         @endphp
                                         <tr>
-                                            <th colspan="3" class="text-right">Sub Total:</th>
-                                            <th class="text-center">৳ {{ $foodOrder->price }}</th>
+                                            <th colspan="3" class="text-right" style="padding: 2px !important;">Sub Total:</th>
+                                            <th class="text-center" style="padding: 2px !important;">৳ {{ $foodOrder->price }}</th>
                                         </tr>
                                         <tr>
-                                            <th colspan="3" class="text-right">Discount:</th>
-                                            <th class="text-center">৳ {{ $foodOrder->discount+ $foodOrder->special_discount }}</th>
+                                            <th colspan="3" class="text-right" style="padding: 2px !important;">Discount:</th>
+                                            <th class="text-center" style="padding: 2px !important;">৳ {{ $foodOrder->discount+ $foodOrder->special_discount }}</th>
                                         </tr>
 
                                         {{--<tr>
@@ -110,29 +110,29 @@
                                             <th class="text-center">৳ {{ $balance }}</th>
                                         </tr>--}}
                                         <tr>
-                                            <th colspan="3" class="text-right">Total:</th>
-                                            <th class="text-center">৳ {{ $foodOrder->discounted_price }}</th>
+                                            <th colspan="3" class="text-right" style="padding: 2px !important;">Total:</th>
+                                            <th class="text-center" style="padding: 2px !important;">৳ {{ $foodOrder->discounted_price }}</th>
                                         </tr>
                                         <tr>
-                                            <th colspan="3" class="text-right">&nbsp;</th>
-                                            <th class="text-center"></th>
+                                            <th colspan="3" class="text-right" style="padding: 2px !important;">&nbsp;</th>
+                                            <th class="text-center" style="padding: 2px !important;"></th>
                                         </tr>
                                         <tr>
-                                            <th colspan="3" class="text-right">{{ $foodOrder->vat_rate }}% VAT:</th>
-                                            <th class="text-center">৳ {{ $foodOrder->vat }}</th>
+                                            <th colspan="3" class="text-right" style="padding: 2px !important;">{{ $foodOrder->vat_rate }}% VAT:</th>
+                                            <th class="text-center" style="padding: 2px !important;">৳ {{ $foodOrder->vat }}</th>
                                         </tr>
 
                                         <tr>
-                                            <th colspan="3" class="text-right">Payable amount:</th>
-                                            <th class="text-center">৳ {{ $foodOrder->payable_amount }}</th>
+                                            <th colspan="3" class="text-right" style="padding: 2px !important;">Paid amount:</th>
+                                            <th class="text-center" style="padding: 2px !important;">৳ {{ $foodOrder->payable_amount }}</th>
                                         </tr>
                                         </tfoot>
                                     </table>
                                 </div>
                             </div>
-                            <div class="invoice-footer mt-5">
+                            <div class="invoice-footer mt-1">
                                 <p class="text-center h4">Thanks for comming</a></p>
-                                <p class="text-center mt-5 pt-5">Generated on {{  date_format(date_create($foodOrder->created_at ?? now()), 'l, F jS, Y') }} </p>
+                                <p class="text-center mt-1">Generated on {{  date_format(date_create($foodOrder->created_at ?? now()), 'l, F jS, Y') }} </p>
                             </div>
                         </div>
                     </div>
@@ -162,7 +162,8 @@
                     </div>--}}
                 </div>
                 <div class="text-center">
-                    <a href="#" class="btn btn-default" onclick="printableDiv('printableArea')"><i class="fa fa-print mr5"></i> Print</a>
+                    <a href="#" class="btn btn-default" onclick="printableDiv('printableAreaCustomer')"><i class="fa fa-print mr5"></i> Print Customer Copy</a>
+                    <a href="#" class="btn btn-default" onclick="printableDiv('printableAreaKitchen')"><i class="fa fa-print mr5"></i> Print Kitchen Copy</a>
                 </div>
 
                 <div class="mt-4">

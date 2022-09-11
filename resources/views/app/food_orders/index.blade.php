@@ -8,19 +8,16 @@
                 </h4>
             </div>
 
-            <div class="searchbar mt-4 mb-5">
+            <div class="mt-4 mb-5">
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-lg-6">
                         <form>
                             <div class="input-group">
                                 <input
                                     id="indexSearch"
-                                    type="text"
+                                    type="date"
                                     name="search"
-                                    placeholder="{{ __('crud.common.search') }}"
-                                    value="{{ $search ?? '' }}"
-                                    class="form-control"
-                                    autocomplete="off"
+
                                 />
                                 <div class="input-group-append">
                                     <button
@@ -33,7 +30,7 @@
                             </div>
                         </form>
                     </div>
-                    <div class="col-md-6 text-right">
+                    <div class="col-lg-6 d-flex justify-content-end">
                         @can('create', App\Models\FoodOrder::class)
                         <a
                             href="{{ route('food-orders.create') }}"
@@ -67,9 +64,6 @@
                                 @lang('crud.food_orders.inputs.discounted_price')
                             </th>
                             <th class="text-right">
-                                @lang('crud.food_orders.inputs.vat_rate')
-                            </th>
-                            <th class="text-right">
                                 @lang('crud.food_orders.inputs.vat')
                             </th>
                             <th class="text-left">
@@ -88,9 +82,7 @@
                             <th class="text-right">
                                 @lang('crud.food_orders.inputs.net_sale_price')
                             </th>
-                            <th class="text-left">
-                                @lang('crud.food_orders.inputs.created_by_id')
-                            </th>
+
                             <th class="text-center">
                                 @lang('crud.common.actions')
                             </th>
@@ -104,43 +96,48 @@
                             <td>{{ $foodOrder->price ?? '-' }}</td>
                             <td>{{ $foodOrder->special_discount ?? '-' }}</td>
                             <td>{{ $foodOrder->discounted_price ?? '-' }}</td>
-                            <td>{{ $foodOrder->vat_rate ?? '-' }}</td>
                             <td>{{ $foodOrder->vat ?? '-' }}</td>
                             <td>{{ $foodOrder->mobile ?? '-' }}</td>
                             <td>{{ $foodOrder->payable_amount ?? '-' }}</td>
                             <td>{{ $foodOrder->payment_type ?? '-' }}</td>
                             <td>{{ $foodOrder->payment_status ?? '-' }}</td>
                             <td>{{ $foodOrder->net_sale_price ?? '-' }}</td>
-                            <td>{{ $foodOrder->created_by_id ?? '-' }}</td>
                             <td class="text-center" style="width: 134px;">
                                 <div
                                     role="group"
                                     aria-label="Row Actions"
                                     class="btn-group"
                                 >
-                                    @can('update', $foodOrder)
-                                    <a
-                                        href="{{ route('food-orders.edit', $foodOrder) }}"
-                                    >
-                                        <button
-                                            type="button"
-                                            class="btn btn-light"
+
+                                    @if($foodOrder->invoice_no)
+                                        @can('view', $foodOrder)
+                                        <a
+                                            href="{{ route('food-orders.show', $foodOrder) }}"
                                         >
-                                            <i class="fa fa-pen-to-square"></i>
-                                        </button>
-                                    </a>
-                                    @endcan @can('view', $foodOrder)
-                                    <a
-                                        href="{{ route('food-orders.show', $foodOrder) }}"
-                                    >
-                                        <button
-                                            type="button"
-                                            class="btn btn-light"
+                                            <button
+                                                type="button"
+                                                class="btn btn-light"
+                                            >
+                                                <i class="fa fa-eye"></i>
+                                            </button>
+                                        </a>
+                                        @endcan
+                                    @else
+                                        @can('update', $foodOrder)
+                                        <a
+                                            href="{{ route('food-orders.edit', $foodOrder) }}"
                                         >
-                                            <i class="fa fa-eye"></i>
-                                        </button>
-                                    </a>
-                                    @endcan @can('delete', $foodOrder)
+                                            <button
+                                                type="button"
+                                                class="btn btn-light"
+                                            >
+                                                <i class="fa fa-pen-to-square"></i>
+                                            </button>
+                                        </a>
+                                        @endcan
+                                    @endif
+
+                                    @can('delete', $foodOrder)
                                     <form
                                         action="{{ route('food-orders.destroy', $foodOrder) }}"
                                         method="POST"

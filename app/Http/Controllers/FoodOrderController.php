@@ -83,11 +83,8 @@ class FoodOrderController extends Controller
         }else $foodOrder->vat = 0;
 
         $foodOrder->payable_amount = $foodOrder->discounted_price + $foodOrder->vat;
-        $foodOrder->net_sale_price = $foodOrder->payable_amount;
-        $foodOrder->menu_names = $menu_names;
         $foodOrder->mobile = $request->mobile;
-        $foodOrder->payment_type = null;
-        $foodOrder->payment_status = $request->payment_status??null;
+        $foodOrder->menu_names = $menu_names;
 
         $foodOrder->created_by_id = auth()->id();
         $foodOrder->save();
@@ -96,6 +93,12 @@ class FoodOrderController extends Controller
             ->route('food-orders.edit', $foodOrder)
             ->withSuccess(__('crud.common.created'));
     }
+
+    public function confirmFoodOrder(Request $request)
+    {
+        return $request;
+    }
+
 
     /**
      * @param \Illuminate\Http\Request $request
@@ -139,6 +142,50 @@ class FoodOrderController extends Controller
 
         $this->authorize('update', $foodOrder);
 
+        if($request->confirm_order) {
+            if($request->payment_type = 'MemberBalance') {
+                $member = Member::findOrFail($foodOrder->member_id);
+                if($member->balance >= $member->balance) $member_actual_limit = $member->balance ;
+                else $member_actual_limit = $member->limit ;
+
+                if($member_actual_limit >= $request->payable_amount) {
+                    $foodOrder->net_sale_price = $foodOrder->payable_amount;
+                    $foodOrder->payment_type = $request->payment_type;
+                    $foodOrder->payment_status = 'PAID';
+                    //invoice
+                    $invoice = FoodOrder::orderBy('invoice_no')->whereDate('invoice_date', date('Y-m-d'))->select('invoice_no', 'invoice_incremental')->first();
+
+                    if($invoice) {
+                        $invoice_incremental = $invoice->invoice_incremental+1;
+                        $invoice_no = date('dmy').$invoice_incremental;
+
+                        $foodOrder->invoice_incremental = $invoice_incremental;
+                        $foodOrder->invoice_no = $invoice_no;
+                        $foodOrder->invoice_date = now();;
+                    }
+                    else {
+                        $foodOrder->invoice_incremental = 1;
+                        $foodOrder->invoice_no = date('dmy').'1';;
+                        $foodOrder->invoice_date = now();;
+                    }
+                    $foodOrder->update();
+
+                    //balance update
+                    $member->balance = $member->balance - $foodOrder->payable_amount;
+                    $member->update();
+
+                    return redirect()
+                        ->route('food-orders.show', $foodOrder)
+                        ->withSuccess('Order Placed !');
+
+                } else {
+                    return redirect()
+                        ->route('food-orders.edit', $foodOrder)
+                        ->withError('Not Enough Balance !');
+                }
+            }
+        }
+
         $menu_names = collect(json_decode($request->menu_names));
 
         $foodOrder->member_id = $request->member_id;
@@ -167,11 +214,8 @@ class FoodOrderController extends Controller
         }else $foodOrder->vat = 0;
 
         $foodOrder->payable_amount = $foodOrder->discounted_price + $foodOrder->vat;
-        $foodOrder->net_sale_price = $foodOrder->payable_amount;
-        $foodOrder->menu_names = $menu_names;
         $foodOrder->mobile = $request->mobile;
-        $foodOrder->payment_type = $request->selected_payment_type??null;
-        $foodOrder->payment_status = $request->payment_status??null;
+        $foodOrder->menu_names = $menu_names;
 
         $foodOrder->update();
 

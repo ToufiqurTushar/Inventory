@@ -127,8 +127,8 @@
             <div class="row">
                 <x-inputs.group class="col-lg-3">
                     <x-inputs.select
-                        x-model="selected_payment_type"
-                        name="selected_payment_type"
+                        x-model="payment_type"
+                        name="payment_type"
                         label="Payment Type">
                         <option value="MemberBalance" selected>Member Balance</option>
                     </x-inputs.select>
@@ -236,23 +236,31 @@
             @lang('crud.common.back')
         </a>
 
-        <button type="submit" class="btn btn-primary float-right" x-bind:disabled="menu_names.length == 0">
+        <button type="submit" class="btn btn-primary float-right" x-bind:disabled="menu_names.length == 0 || show_confirm_order_button">
             <i class="fa fa-floppy-disk"></i>
             {{ $editing ? "Update Order" : 'Create Order'}}
         </button>
 
         @if($editing)
-        <template x-if="balance_after_payment >= (-1*limit)">
-        <a href="{{ route('food-orders.show', $foodOrder) }}" class="btn btn-success float-right">
-            <i class="fa fa-cart-shopping"></i>
-            {{ $editing ? "Confirm Order" : 'Create Order'}}
-        </a>
-        </template>
-        <template x-if="balance_after_payment < (-1*limit)">
-            <a  class="btn btn-danger float-right">
-                Excedd Credit Limit !
-            </a>
-        </template>
+            @if(!$foodOrder->invoice_no)
+                <template x-if="show_confirm_order_button && balance_after_payment >= (-1*limit)">
+                <button type="submit" class="btn btn-success float-right">
+                    <input name="confirm_order" type="hidden" value="1">
+                    <i class="fa fa-cart-shopping"></i> Confirm Order
+                </button>
+                </template>
+                <template x-if="balance_after_payment < (-1*limit)">
+                    <a  class="btn btn-danger float-right">
+                        Excedd Credit Limit !
+                    </a>
+                </template>
+            @else
+                <template x-if="balance_after_payment < (-1*limit)">
+                    <a  class="btn btn-danger float-right">
+                        Excedd Credit Limit !
+                    </a>
+                </template>
+            @endif
         @endif
     </div>
 
@@ -283,6 +291,8 @@
                 balance: {{ $editing ? $member->balance: 'null' }},
                 limit: {{ $editing ? $member->limit: 'null' }},
                 balance_after_payment : {{ $editing ? $member->balance - $foodOrder->payable_amount : 'null' }},
+
+                show_confirm_order_button: {{ $editing ?'true': 'false' }},
 
                 selectMemberItem(item_id) {
                     let member_item = this.members.filter(function(item){
@@ -377,6 +387,8 @@
                     this.grand_vat = (grandPrice - this.grand_discount) * this.vat_rate/100;
                     this.grand_total = this.grand_discounted_price + this.grand_vat;
                     this.balance_after_payment = this.balance - this.grand_total;
+
+                    this.show_confirm_order_button = false;
                 },
             };
         }
