@@ -23,6 +23,12 @@
                 @can('view-any', App\Models\StockIn::class)
                     <a class="nav_link {{ (request()->segment(1) == 'stocks-in') ? 'active' : '' }}" href="{{ route('stocks-in.index') }}"><i class="fa fa-layer-group nav_logo-icon"></i><span class="nav_name">Stocks In</span></a>
                 @endcan
+
+                @can('view-any', App\Models\PaymentType::class)
+                    <a class="nav_link {{ (request()->segment(1) == 'payment-types') ? 'active' : '' }}" href="{{ route('payment-types.index') }}"><i class="fa fa-credit-card nav_logo-icon"></i><span class="nav_name">Payment Types</span></a>
+                @endcan
+
+                    <a class="nav_link {{ (request()->segment(1) == 'sales-report') ? 'active' : '' }}" href="{{ route('sales-report') }}"><i class="fa fa-square nav_logo-icon"></i><span class="nav_name">Sales Report</span></a>
             </div>
 
         </div>

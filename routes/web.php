@@ -1,6 +1,9 @@
 <?php
 
 
+use App\Http\Controllers\PaymentTypeController;
+use App\Http\Controllers\ReportController;
+use App\Http\Livewire\ShowReport;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\MemberController;
@@ -37,4 +40,6 @@ Route::prefix('/')->middleware('auth')->group(function () {
     Route::resource('members', MemberController::class);
     Route::resource('membership-types', MembershipTypeController::class);
     Route::resource('stocks-in', StockInController::class);
+    Route::resource('payment-types', PaymentTypeController::class);
+    Route::get('/sales-report', [ReportController::class, 'index'])->name('sales-report');
 });

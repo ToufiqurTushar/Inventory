@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
@@ -14,67 +15,73 @@ class PermissionsSeeder extends Seeder
         // Reset cached roles and permissions
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
-        // Create default permissions
-        Permission::create(['name' => 'list foodentries']);
-        Permission::create(['name' => 'view foodentries']);
-        Permission::create(['name' => 'create foodentries']);
-        Permission::create(['name' => 'update foodentries']);
-        Permission::create(['name' => 'delete foodentries']);
+        // updateOrCreate default permissions
+        Permission::updateOrCreate(['name' => 'list foodentries']);
+        Permission::updateOrCreate(['name' => 'view foodentries']);
+        Permission::updateOrCreate(['name' => 'updateOrCreate foodentries']);
+        Permission::updateOrCreate(['name' => 'update foodentries']);
+        Permission::updateOrCreate(['name' => 'delete foodentries']);
 
-        Permission::create(['name' => 'list foodorders']);
-        Permission::create(['name' => 'view foodorders']);
-        Permission::create(['name' => 'create foodorders']);
-        Permission::create(['name' => 'update foodorders']);
-        Permission::create(['name' => 'delete foodorders']);
+        Permission::updateOrCreate(['name' => 'list foodorders']);
+        Permission::updateOrCreate(['name' => 'view foodorders']);
+        Permission::updateOrCreate(['name' => 'updateOrCreate foodorders']);
+        Permission::updateOrCreate(['name' => 'update foodorders']);
+        Permission::updateOrCreate(['name' => 'delete foodorders']);
 
-        Permission::create(['name' => 'list members']);
-        Permission::create(['name' => 'view members']);
-        Permission::create(['name' => 'create members']);
-        Permission::create(['name' => 'update members']);
-        Permission::create(['name' => 'delete members']);
+        Permission::updateOrCreate(['name' => 'list members']);
+        Permission::updateOrCreate(['name' => 'view members']);
+        Permission::updateOrCreate(['name' => 'updateOrCreate members']);
+        Permission::updateOrCreate(['name' => 'update members']);
+        Permission::updateOrCreate(['name' => 'delete members']);
 
-        Permission::create(['name' => 'list membershiptypes']);
-        Permission::create(['name' => 'view membershiptypes']);
-        Permission::create(['name' => 'create membershiptypes']);
-        Permission::create(['name' => 'update membershiptypes']);
-        Permission::create(['name' => 'delete membershiptypes']);
+        Permission::updateOrCreate(['name' => 'list membershiptypes']);
+        Permission::updateOrCreate(['name' => 'view membershiptypes']);
+        Permission::updateOrCreate(['name' => 'updateOrCreate membershiptypes']);
+        Permission::updateOrCreate(['name' => 'update membershiptypes']);
+        Permission::updateOrCreate(['name' => 'delete membershiptypes']);
 
-        Permission::create(['name' => 'list stocksin']);
-        Permission::create(['name' => 'view stocksin']);
-        Permission::create(['name' => 'create stocksin']);
-        Permission::create(['name' => 'update stocksin']);
-        Permission::create(['name' => 'delete stocksin']);
+        Permission::updateOrCreate(['name' => 'list stocksin']);
+        Permission::updateOrCreate(['name' => 'view stocksin']);
+        Permission::updateOrCreate(['name' => 'updateOrCreate stocksin']);
+        Permission::updateOrCreate(['name' => 'update stocksin']);
+        Permission::updateOrCreate(['name' => 'delete stocksin']);
 
-        // Create user role and assign existing permissions
+        Permission::updateOrCreate(['name' => 'list paymenttypes']);
+        Permission::updateOrCreate(['name' => 'view paymenttypes']);
+        Permission::updateOrCreate(['name' => 'updateOrCreate paymenttypes']);
+        Permission::updateOrCreate(['name' => 'update paymenttypes']);
+        Permission::updateOrCreate(['name' => 'delete paymenttypes']);
+
+        // updateOrCreate user role and assign existing permissions
         $currentPermissions = Permission::all();
-        $userRole = Role::create(['name' => 'user']);
+        $userRole = Role::updateOrCreate(['name' => 'user']);
         $userRole->givePermissionTo($currentPermissions);
 
-        // Create admin exclusive permissions
-        Permission::create(['name' => 'list roles']);
-        Permission::create(['name' => 'view roles']);
-        Permission::create(['name' => 'create roles']);
-        Permission::create(['name' => 'update roles']);
-        Permission::create(['name' => 'delete roles']);
+        // updateOrCreate admin exclusive permissions
+        Permission::updateOrCreate(['name' => 'list roles']);
+        Permission::updateOrCreate(['name' => 'view roles']);
+        Permission::updateOrCreate(['name' => 'updateOrCreate roles']);
+        Permission::updateOrCreate(['name' => 'update roles']);
+        Permission::updateOrCreate(['name' => 'delete roles']);
 
-        Permission::create(['name' => 'list permissions']);
-        Permission::create(['name' => 'view permissions']);
-        Permission::create(['name' => 'create permissions']);
-        Permission::create(['name' => 'update permissions']);
-        Permission::create(['name' => 'delete permissions']);
+        Permission::updateOrCreate(['name' => 'list permissions']);
+        Permission::updateOrCreate(['name' => 'view permissions']);
+        Permission::updateOrCreate(['name' => 'updateOrCreate permissions']);
+        Permission::updateOrCreate(['name' => 'update permissions']);
+        Permission::updateOrCreate(['name' => 'delete permissions']);
 
-        Permission::create(['name' => 'list users']);
-        Permission::create(['name' => 'view users']);
-        Permission::create(['name' => 'create users']);
-        Permission::create(['name' => 'update users']);
-        Permission::create(['name' => 'delete users']);
+        Permission::updateOrCreate(['name' => 'list users']);
+        Permission::updateOrCreate(['name' => 'view users']);
+        Permission::updateOrCreate(['name' => 'updateOrCreate users']);
+        Permission::updateOrCreate(['name' => 'update users']);
+        Permission::updateOrCreate(['name' => 'delete users']);
 
-        // Create admin role and assign all permissions
+        // updateOrCreate admin role and assign all permissions
         $allPermissions = Permission::all();
-        $adminRole = Role::create(['name' => 'super-admin']);
+        $adminRole = Role::updateOrCreate(['name' => 'super-admin']);
         $adminRole->givePermissionTo($allPermissions);
 
-        $user = \App\Models\User::whereEmail('admin@traveltech.digital')->first();
+        $user = User::find(1);
 
         if ($user) {
             $user->assignRole($adminRole);

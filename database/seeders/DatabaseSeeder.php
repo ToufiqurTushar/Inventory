@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -13,13 +14,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // Adding an admin user
-        $user = \App\Models\User::factory()
-            ->count(1)
-            ->create([
-                'email' => 'admin@traveltech.digital',
-                'password' => \Hash::make('12345678'),
-            ]);
+        User::updateOrCreate([
+            'email' => 'admin@traveltech.digital',
+        ],[
+            'email' => 'admin@traveltech.digital',
+            'password' => \Hash::make('12345678'),
+        ]);
+
+        $this->call(PaymentTypeSeeder::class);
         $this->call(PermissionsSeeder::class);
 
 

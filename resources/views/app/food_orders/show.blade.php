@@ -30,26 +30,25 @@
                         </div>
                         <div class="col-lg-12">
                             <div class="invoice-items" id="printableAreaKitchen">
-                                <table width="100%">
-                                <tr>
-                                    <td width="50%">
-                                        <ul class="list-unstyled">
-                                            <li><strong>Invoice</strong> #{{ $foodOrder->invoice_no }}</li>
-                                            <li><strong>Invoice Date:</strong> {{  date_format(date_create($foodOrder->invoice_date ?? now()), 'l, F jS, Y') }}</li>
-                                            <li><strong>Status:</strong> <span class="badge bg-success">PAID</span></li>
-                                        </ul>
-                                    </td>
-                                    <td width="50%">
-                                        <ul class="list-unstyled">
-                                            <li><strong>Invoiced To</strong></li>
-                                            <li>{{ \App\Models\Member::find($foodOrder->member_id)->name ?? '' }}</li>
-                                            <li>{{ $foodOrder->mobile }}</li>
-                                        </ul>
-                                    </td>
-                                </tr>
+                                <table class="table table-bordered">
+                                    <tbody>
+                                    <tr>
+                                        <td width="50%">
+                                            <div> <strong>Invoice</strong> #{{ $foodOrder->invoice_no }}</div>
+                                            <div> <strong>Invoice Date:</strong> {{  date_format(date_create($foodOrder->invoice_date ?? now()), 'l, F jS, Y') }}
+                                            <div> <strong>Status:</strong> <span class="badge bg-success">{{ \App\Models\PaymentType::find($foodOrder->payment_type_id)->name ?? '-' }}</span></div>
+
+                                        </td>
+                                        <td width="50%">
+                                            <div> <strong>Invoiced To</strong></div>
+                                            <div> {{ \App\Models\Member::find($foodOrder->member_id)->name ?? '' }}</div>
+                                            <div> {{ $foodOrder->mobile }}</div>
+                                        </td>
+                                    </tr>
+                                    </tbody>
                                 </table>
                                 <div class="table-responsive" style="overflow: hidden; outline: none;" tabindex="0">
-                                    <table class="table table-bordered">
+                                    <table class="table table-bordered" style="font-size: 12px">
                                         <thead>
                                         <tr>
                                             <th width="50%">Description</th>
@@ -163,7 +162,6 @@
                 </div>
                 <div class="text-center">
                     <a href="#" class="btn btn-default" onclick="printableDiv('printableAreaCustomer')"><i class="fa fa-print mr5"></i> Print Customer Copy</a>
-                    <a href="#" class="btn btn-default" onclick="printableDiv('printableAreaKitchen')"><i class="fa fa-print mr5"></i> Print Kitchen Copy</a>
                 </div>
 
                 <div class="mt-4">

@@ -64,8 +64,22 @@ function printableDiv(printableAreaDivId) {
     var originalContents = document.body.innerHTML;
 
     document.body.innerHTML = printContents;
-
     window.print();
-
     document.body.innerHTML = originalContents;
+}
+
+function printableNewWindow(printableAreaDivId) {
+    var divToPrint=document.getElementById(printableAreaDivId);
+    newWin= window.open("new");
+    newWin.document.write(divToPrint.outerHTML);
+    newWin.print();
+    newWin.close();
+    /* var printContents = document.getElementById(printableAreaDivId).innerHTML;
+     var originalContents = document.body.innerHTML;
+
+     document.body.innerHTML = printContents;
+
+     window.print();
+
+     document.body.innerHTML = originalContents;*/
 }

@@ -99,7 +99,7 @@
                             <td>{{ $foodOrder->vat ?? '-' }}</td>
                             <td>{{ $foodOrder->mobile ?? '-' }}</td>
                             <td>{{ $foodOrder->payable_amount ?? '-' }}</td>
-                            <td>{{ $foodOrder->payment_type ?? '-' }}</td>
+                            <td>{{ \App\Models\PaymentType::find($foodOrder->payment_type_id)->name ?? '-' }}</td>
                             <td>{{ $foodOrder->payment_status ?? '-' }}</td>
                             <td>{{ $foodOrder->net_sale_price ?? '-' }}</td>
                             <td class="text-center" style="width: 134px;">
@@ -109,7 +109,7 @@
                                     class="btn-group"
                                 >
 
-                                    @if($foodOrder->invoice_no)
+                                    @if($foodOrder->payment_status)
                                         @can('view', $foodOrder)
                                         <a
                                             href="{{ route('food-orders.show', $foodOrder) }}"
@@ -138,7 +138,7 @@
                                     @endif
 
                                     @can('delete', $foodOrder)
-                                    <form
+                                   {{-- <form
                                         action="{{ route('food-orders.destroy', $foodOrder) }}"
                                         method="POST"
                                         onsubmit="return confirm('{{ __('crud.common.are_you_sure') }}')"
@@ -150,7 +150,7 @@
                                         >
                                             <i class="fa fa-trash-can"></i>
                                         </button>
-                                    </form>
+                                    </form>--}}
                                     @endcan
                                 </div>
                             </td>

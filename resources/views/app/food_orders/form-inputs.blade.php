@@ -1,14 +1,27 @@
 @php $editing = isset($foodOrder) @endphp
 
-<div class="row" x-data="init_()">
+<div class="row" x-data="init_()" x-init="$nextTick(() => { filteredMembers();})">
+
     <x-inputs.group class="col-sm-12">
-        <x-inputs.select x-model="selected_member_id" @change="selectMemberItem($event.target.value)" name="member_id" label="Member" required>
-            @php $selected = $editing ? $foodOrder->member_id : '' @endphp
-            <option value="">Please select Member</option>
-            @foreach($members as $item)
-                <option value="{{ $item->id }}" {{ $selected ==  $item->id ? 'selected' : '' }}>{{ $item->membership_no }} - {{  $item->name }}</option>
-            @endforeach
-        </x-inputs.select>
+        <label class="label" for="member_id">Member<span class="text-danger">*</span></label>
+        <div class="input-group">
+            <input x-model="search" class="form-control" placeholder="Find..." type="text"  autocomplete="off">
+            <button x-show="search != null && search.length > 0" @click="search = ''" class="btn btn-outline-secondary" type="button"><i class="fa fa-times"></i></button>
+        </div>
+        <div class="">
+            <div class="bg-light overflow-auto p-1" style="max-height:150px;">
+                <template x-for="item in filteredMembers()" :key="item.id">
+                    <div class="p-1">
+                        <input x-model="selected_member_id" @change="selectMemberItem($event.target.value)" class="hand" type="radio" :value="item.id" :id="'member-radio'+item.id" name="member_id">
+                        <label class="hand" :for="'member-radio'+item.id" x-text="item.name+' - '+item.membership_no"></label>
+                        {{--<li x-html="highlightSearch(item.name)"></li>--}}
+                    </div>
+                </template>
+            </div>
+            <template x-if="filteredMembers().length == 0">
+                <div class="p-1 bg-warning">No Member Found !</div>
+            </template>
+        </div>
     </x-inputs.group>
 
     <x-inputs.group class="col-sm-12">
@@ -123,46 +136,6 @@
                 <h5>Total: <span x-text="grand_total"></span></h5>
 
             </div>
-
-            <div class="row">
-                <x-inputs.group class="col-lg-3">
-                    <x-inputs.select
-                        x-model="payment_type"
-                        name="payment_type"
-                        label="Payment Type">
-                        <option value="MemberBalance" selected>Member Balance</option>
-                    </x-inputs.select>
-                </x-inputs.group>
-                <x-inputs.group class="col-lg-3">
-                    <x-inputs.text
-                        x-model.number="balance"
-                        label="Balance"
-                        name="balnnce"
-                        class="form-control"
-                        readonly
-                    ></x-inputs.text>
-                </x-inputs.group>
-                <x-inputs.group class="col-lg-3">
-                    <x-inputs.text
-                        x-model.number="limit"
-                        label="Limit"
-                        name="limit"
-                        class="form-control"
-                        readonly
-                    ></x-inputs.text>
-                </x-inputs.group>
-                <x-inputs.group class="col-lg-3">
-                    <x-inputs.text
-                        x-model.number="balance_after_payment"
-                        label="Balance after payment"
-                        name="balance_after_payment"
-                        class="form-control"
-                        readonly
-                    ></x-inputs.text>
-                </x-inputs.group>
-            </div>
-
-            <hr>
         </div>
     </template>
 
@@ -225,7 +198,48 @@
     </div>
 
     <input x-model="menu_names_json" name="menu_names" type="hidden">
+    <hr>
 
+    <template x-if="show_confirm_payment_btn">
+        <div class="row">
+            <x-inputs.group class="col-lg-3">
+                <x-inputs.select x-model="payment_type_id" @change="selectPaymentTypeItem($event.target.value)" name="payment_type_id" label="Payment Type">
+                    @php $selected = $editing ? $foodOrder->payment_type_id : '' @endphp
+                    <option value="">Please select</option>
+                    @foreach($paymentTypes as $item)
+                        <option value="{{ $item->id }}" {{ $selected ==  $item->id ? 'selected' : '' }}>{{  $item->name }}</option>
+                    @endforeach
+                </x-inputs.select>
+            </x-inputs.group>
+            <x-inputs.group class="col-lg-3">
+                <x-inputs.text
+                    x-model.number="balance"
+                    label="Balance"
+                    name="balnnce"
+                    class="form-control"
+                    readonly
+                ></x-inputs.text>
+            </x-inputs.group>
+            <x-inputs.group class="col-lg-3">
+                <x-inputs.text
+                    x-model.number="limit"
+                    label="Limit"
+                    name="limit"
+                    class="form-control"
+                    readonly
+                ></x-inputs.text>
+            </x-inputs.group>
+            <x-inputs.group class="col-lg-3">
+                <x-inputs.text
+                    x-model.number="balance_after_payment"
+                    label="Balance after payment"
+                    name="balance_after_payment"
+                    class="form-control"
+                    readonly
+                ></x-inputs.text>
+            </x-inputs.group>
+        </div>
+    </template>
 
     <div class="mt-4">
         <a
@@ -236,38 +250,109 @@
             @lang('crud.common.back')
         </a>
 
-        <button type="submit" class="btn btn-primary float-right" x-bind:disabled="menu_names.length == 0 || show_confirm_order_button">
+        <button type="submit" class="btn btn-primary float-right" x-bind:disabled="menu_names.length == 0 || show_select_payment_type_btn">
             <i class="fa fa-floppy-disk"></i>
             {{ $editing ? "Update Order" : 'Create Order'}}
         </button>
 
         @if($editing)
-            @if(!$foodOrder->invoice_no)
-                <template x-if="show_confirm_order_button && balance_after_payment >= (-1*limit)">
-                <button type="submit" class="btn btn-success float-right">
-                    <input name="confirm_order" type="hidden" value="1">
-                    <i class="fa fa-cart-shopping"></i> Confirm Order
+            <template x-if="show_select_payment_type_btn && !show_confirm_payment_btn">
+                <button @click="show_confirm_payment_btn = true" type="button" class="btn btn-success float-right">
+                    <i class="fa fa-credit-card"></i> Select Payment Type
                 </button>
-                </template>
-                <template x-if="balance_after_payment < (-1*limit)">
-                    <a  class="btn btn-danger float-right">
-                        Excedd Credit Limit !
-                    </a>
-                </template>
-            @else
-                <template x-if="balance_after_payment < (-1*limit)">
-                    <a  class="btn btn-danger float-right">
-                        Excedd Credit Limit !
-                    </a>
-                </template>
-            @endif
+            </template>
+            <template x-if="show_confirm_payment_btn">
+                <button type="submit" class="btn btn-success float-right" x-bind:disabled="payment_type_id == null || payment_type_id == ''">
+                    <input name="confirm_payment" type="hidden" :value="(payment_type_id == null || payment_type_id == '')?0:1">
+                    <i class="fa fa-cart-shopping"></i> Confirm Payment
+                </button>
+            </template>
+            <template x-if="payment_type_id == 2 && balance_after_payment < (-1*limit)">
+                <a  class="btn btn-danger float-right">
+                    Excedd Credit Limit !
+                </a>
+            </template>
+
+            <div class="text-center mt-5">
+                <a href="#" class="btn btn-default" onclick="printableNewWindow('printableAreaKitchen')"><i class="fa fa-print mr5"></i> Print Kitchen Copy</a>
+            </div>
+            <div id="printableAreaKitchen" >
+                <table width="100%" class="table table-bordered" style="font-size: 12px">
+                    <tbody>
+                    <tr>
+                        <td width="50%">
+                            <div> <strong>Invoice</strong> #{{ $foodOrder->invoice_no }}</div>
+                            <div> <strong>Invoice Date:</strong> {{  date_format(date_create($foodOrder->invoice_date ?? now()), 'l, F jS, Y') }}
+                        </td>
+                        <td width="50%">
+                            <div> <strong>Invoiced To</strong></div>
+                            <div> {{ \App\Models\Member::find($foodOrder->member_id)->name ?? '' }}</div>
+                            <div> {{ $foodOrder->mobile }}</div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="table-responsive" style="overflow: hidden; outline: none;" tabindex="0">
+                    <table width="100%" class="table table-bordered" style="font-size: 12px">
+                        <thead>
+                        <tr>
+                            <th style="text-align: left;" width="50%">Description</th>
+                            <th style="text-align: center;" width="10%" class="e">Qty</th>
+                            <th style="text-align: center;" width="20%" class="">Rate</th>
+                            <th style="text-align: center;" width="30%" class="">Total</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($foodOrder->menu_names as $item)
+                            <tr class="align-middle">
+                                @php
+                                    $food = \App\Models\FoodEntry::find($item['id']);
+                                    if($food) {
+                                        $foodName = $food->name;
+                                        if($food->sub_name) $foodName = $food->name.' <br>-'.$food->sub_name.'';
+                                    }
+                                @endphp
+                                <td style="padding: 2px !important; text-align: left">{!!  $foodName ?? '-' !!}</td>
+                                <td style="padding: 2px !important; text-align: center" class="align-middle">{{ $item['q'] }}</td>
+                                <td style="padding: 2px !important; text-align: center" class="align-middle">৳ {{ $item['r'] }}</td>
+                                <td style="padding: 2px !important; text-align: center" class="align-middle">৳ {{ $item['p']}}</td>
+                            </tr>
+                        @endforeach
+                        @if(count($foodOrder->menu_names) < 2)
+                            @foreach(array_fill(0, 2-count($foodOrder->menu_names), 0) as $item)
+                                <tr>
+                                    <td style="padding: 2px !important;">&nbsp;</td>
+                                    <td style="padding: 2px !important;"></td>
+                                    <td style="padding: 2px !important;"></td>
+                                    <td style="padding: 2px !important;"></td>
+                                </tr>
+                            @endforeach
+                        @endif
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         @endif
     </div>
 
     <script>
         function init_() {
             return {
+                search: {{ $editing ? \App\Models\Member::find($foodOrder->member_id)->membership_no??'null' : 'null' }},
                 members: @json($members??[]),
+                filteredMembers() {
+                    if(this.search == null) return this.members;
+                    return this.members.filter(
+                        item => item.name.toLowerCase().includes(this.search) || item.membership_no.includes(this.search)
+                    );
+                },
+                highlightSearch(s) {
+                    if (this.search === '') return s;
+
+                    return s.replaceAll(
+                        new RegExp(`(${this.search.toLowerCase()})`, 'ig'), '<strong class="bg-primary">$1</strong>'
+                    )
+                },
                 food_entries : @json($foodentries?? 'null'),
                 mobile: {{ $editing ? $foodOrder->mobile : 'null' }},
                 menu_names: @json($foodOrder->menu_names??[]),
@@ -282,6 +367,11 @@
                 selected_food_rate: null,
                 selected_food_total_price: null,
 
+                payment_type_id: {{ $editing ? $foodOrder->payment_type_id??'null' : 'null' }},
+                commision_rate: null,
+                show_select_payment_type_btn: {{ $editing ? 'true' : 'false' }},
+                show_confirm_payment_btn: false,
+
                 grand_price: {{ $editing ? $foodOrder->price : 'null' }},
                 grand_discounted_price: {{ $editing ? $foodOrder->discounted_price : 'null' }},
                 grand_discount: {{ $editing ? $foodOrder->discount+ $foodOrder->special_discount : 'null' }},
@@ -290,9 +380,7 @@
 
                 balance: {{ $editing ? $member->balance: 'null' }},
                 limit: {{ $editing ? $member->limit: 'null' }},
-                balance_after_payment : {{ $editing ? $member->balance - $foodOrder->payable_amount : 'null' }},
-
-                show_confirm_order_button: {{ $editing ?'true': 'false' }},
+                balance_after_payment : {{ $editing ? $member->balance : 'null' }},
 
                 selectMemberItem(item_id) {
                     let member_item = this.members.filter(function(item){
@@ -359,6 +447,9 @@
 
                     this.calculateGrandPrice();
                 },
+                selectPaymentTypeItem(item_id) {
+                    this.calculateAfterBalance();
+                },
                 calculateItemPrice(food_entry_id) {
                     let food_item = this.food_entries.filter(function(item){
                         return item.id == food_entry_id;
@@ -386,9 +477,14 @@
                     this.grand_discounted_price = grandPrice -  this.grand_discount;
                     this.grand_vat = (grandPrice - this.grand_discount) * this.vat_rate/100;
                     this.grand_total = this.grand_discounted_price + this.grand_vat;
-                    this.balance_after_payment = this.balance - this.grand_total;
 
-                    this.show_confirm_order_button = false;
+                    this.payment_type_id = null;
+                    this.show_select_payment_type_btn = false;
+                    this.show_confirm_payment_btn = false;
+                },
+                calculateAfterBalance() {
+                    if(this.payment_type_id == 2) this.balance_after_payment = this.balance - this.grand_total;
+                    else this.balance_after_payment = this.balance;
                 },
             };
         }

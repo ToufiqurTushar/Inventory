@@ -147,6 +147,19 @@ return [
         ],
     ],
 
+    'payment_types' => [
+        'name' => 'Payment Types',
+        'index_title' => 'PaymentTypes List',
+        'new_title' => 'New Payment type',
+        'create_title' => 'Create PaymentType',
+        'edit_title' => 'Edit PaymentType',
+        'show_title' => 'Show PaymentType',
+        'inputs' => [
+            'name' => 'Name',
+            'commission_rate' => 'Commission Rate',
+        ],
+    ],
+
     'permissions' => [
         'name' => 'Permissions',
         'index_title' => 'Permissions List',
