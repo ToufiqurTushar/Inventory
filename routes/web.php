@@ -42,4 +42,6 @@ Route::prefix('/')->middleware('auth')->group(function () {
     Route::resource('stocks-in', StockInController::class);
     Route::resource('payment-types', PaymentTypeController::class);
     Route::get('/sales-report', [ReportController::class, 'index'])->name('sales-report');
+    Route::post('sales-report', [ReportController::class, 'report'])->name('sales-report-list');
+
 });

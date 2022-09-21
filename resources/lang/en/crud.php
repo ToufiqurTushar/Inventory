@@ -5,6 +5,7 @@ return [
         'actions' => 'Actions',
         'create' => 'Create',
         'edit' => 'Edit',
+        'pdf'=> 'PDF',
         'update' => 'Update',
         'new' => 'New',
         'cancel' => 'Cancel',
@@ -154,6 +155,7 @@ return [
         'create_title' => 'Create PaymentType',
         'edit_title' => 'Edit PaymentType',
         'show_title' => 'Show PaymentType',
+        'pdf' => 'PDF',
         'inputs' => [
             'name' => 'Name',
             'commission_rate' => 'Commission Rate',
@@ -170,4 +172,8 @@ return [
             'name' => 'Name',
         ],
     ],
+    'reports' => [
+        'index_title' => 'Sales Report',
+        'show' => 'Submit'
+    ]
 ];
