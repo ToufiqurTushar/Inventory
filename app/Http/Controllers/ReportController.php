@@ -39,12 +39,12 @@ class ReportController extends Controller
                 $html_content = $view->render();
                 PDF::AddPage('L');
                 PDF::setFooterCallback(function($pdf){
-                               $pdf->SetY(-15);
-                               // Set font
-                               $pdf->SetFont('helvetica', 'I', 8);
-                               // Page number
-                               $pdf->Cell(0, 10, 'Page '.$pdf->getAliasNumPage().'/'.$pdf->getAliasNbPages(), 0, false, 'C', 0, '', 0, false, 'T', 'M');
-                           });
+                   $pdf->SetY(-15);
+                   // Set font
+                   $pdf->SetFont('helvetica', 'I', 8);
+                    // Page number
+                    $pdf->Cell(0, 10, 'Developed By Traveltech.digital- Page '.$pdf->getAliasNumPage().'/'.$pdf->getAliasNbPages(), 0, false, 'C', 0, '', 0, false, 'T', 'M');
+                });
                 PDF::writeHTML($html_content, true, false, true, false, '');
                 ob_end_clean();
                 PDF::Output('Report.pdf');

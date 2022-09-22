@@ -174,16 +174,13 @@ class FoodOrderController extends Controller
 
         if($request->confirm_payment) {
             $member = Member::findOrFail($foodOrder->member_id);
+
             if($request->payment_type_id == 2) {
                 if($member->balance >= $member->balance) $member_actual_limit = $member->balance ;
                 else $member_actual_limit = $member->limit ;
 
                 if($member_actual_limit >= $request->payable_amount) {
                     $foodOrder->net_sale_price = $foodOrder->payable_amount;
-                    return redirect()
-                        ->route('food-orders.show', $foodOrder)
-                        ->withSuccess('Order Placed !');
-
                 } else {
                     return redirect()
                         ->route('food-orders.edit', $foodOrder)

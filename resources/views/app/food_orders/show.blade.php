@@ -36,7 +36,7 @@
                                         <td width="50%">
                                             <div> <strong>Invoice</strong> #{{ $foodOrder->invoice_no }}</div>
                                             <div> <strong>Invoice Date:</strong> {{  date_format(date_create($foodOrder->invoice_date ?? now()), 'l, F jS, Y') }}
-                                            <div> <strong>Status:</strong> <span class="badge bg-success">{{ \App\Models\PaymentType::find($foodOrder->payment_type_id)->name ?? '-' }}</span></div>
+                                                <div> <strong>Status:</strong> <span class="badge bg-success">{{ \App\Models\PaymentType::find($foodOrder->payment_type_id)->name ?? '-' }}</span></div>
 
                                         </td>
                                         <td width="50%">
@@ -132,6 +132,7 @@
                             <div class="invoice-footer mt-1">
                                 <p class="text-center h4">Thanks for comming</a></p>
                                 <p class="text-center mt-1">Generated on {{  date_format(date_create($foodOrder->created_at ?? now()), 'l, F jS, Y') }} </p>
+                                <p class="text-center h6">Developed By <b>Traveltech.digital</b></a></p>
                             </div>
                         </div>
                     </div>
