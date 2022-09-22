@@ -78,4 +78,4 @@
     </tbody>
 
 </table>
-<footer style="text-align: center; padding-top: 20px">Developed by Traveltech.digital</footer>
+
