@@ -13,12 +13,12 @@
             <td width="10%" align = "left">
                 <div class="invoice-logo"><img width="100" src="{{ 'images/logo.png' }}" alt="Invoice logo"></div>
             </td>
-    
-    
+
+
             <td align="center"style="width:90%">
-               
+
                 <h2>World Travelr's Club</h2>
-                <span style="font-size: 10px; color: blue">{!! $heading !!}</span>              
+                <span style="font-size: 10px; color: blue">{!! $heading !!}</span>
                 <br>
             </td>
         </tr>
@@ -26,7 +26,7 @@
         <tr align="center" style="font-size: 8px; font-weight: bold;background-color: #d2ff4d">
                           <th width="08%" border="0.5">Sl</th>
                           <th width="10%" border="0.5">Bill / Trans. No</th>
-                          <th width="10%" border="0.5">Member ID</th>                          
+                          <th width="10%" border="0.5">Member ID</th>
                           <th width="08%" border="0.5">VAT </th>
                           <th width="08%" border="0.5">Discount</th>
                           <th width="10%" border="0.5">Amount Rec.</th>
@@ -36,14 +36,14 @@
 
                           <th width="10%" border="0.5">Cash Received</th>
                           <th width="10%" border="0.5">Received at Bank</th>
-                          
 
-                                                    
+
+
                         </tr>
     </thead>
-   
-    <tbody>         
-                        
+
+    <tbody>
+
 
                         @forelse($dailyReports as $item)
                         <tr>
@@ -81,8 +81,9 @@
                             <td width="10%" border = "0.5" align = "right">{{ $total_recieved_bank }}</td>
 
                         </tr>
-                             
-                         
+
+
                     </tbody>
 
 </table>
+<footer><center>Developed by Traveltech.digital</center></footer>
