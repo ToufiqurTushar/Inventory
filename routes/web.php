@@ -4,6 +4,7 @@
 use App\Http\Controllers\PaymentTypeController;
 use App\Http\Controllers\ReportController;
 use App\Http\Livewire\ShowReport;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\MemberController;
@@ -30,6 +31,14 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return view('home.index');
 })->middleware(['auth'])->name('dashboard');
+
+Route::get('/command', function () {
+    //Artisan::call('migrate');
+    Artisan::call('storage:link');
+    Artisan::call('cache:clear');
+    dd("Cache is cleared");
+})->middleware(['auth']);
+
 
 
 Route::prefix('/')->middleware('auth')->group(function () {
